@@ -11,7 +11,7 @@
     <style>
         /* Additional styles for observatory page */
         .observatory-header {
-            background: var(--color-forest-dark);
+            background: linear-gradient(135deg, var(--color-forest-dark) 0%, var(--color-forest-mid) 100%);
             color: var(--color-cream);
             padding: var(--spacing-lg) 0;
             border-bottom: 2px solid var(--color-amber-base);
@@ -283,7 +283,7 @@
                     6 FEEDS ACTIVE
                 </span>
                 <span class="status-item timestamp" id="current-time">
-                    2026.02.14 / 14:23:17 EST
+                    <iframe src="https://free.timeanddate.com/clock/iaagyjci/n1081/fn8/fcf5f1e8/tc2a2a2a/pc2a2a2a/ahr/tt0/tw0/tm2/td2/th2/ts1/ta1/tb2" frameborder="0" width="246" height="18"></iframe>
                 </span>
             </div>
         </div>
@@ -408,12 +408,18 @@
                     
                     <div class="feed-thumbnail">
                         <div class="camera-overlay">
-                            <div class="overlay-header">
-                                <span class="camera-id" style="font-size: 0.65rem;">CANOPY-02</span>
+                            <div class="camera-overlay">
+                                <div class="overlay-header">
+                                    <span class="camera-id">CANOPY-02</span>
+                                    <span class="camera-status offline">● OFFLINE</span>
+                                </div>
+                                <div class="overlay-footer">
+                                    <span class="timestamp">EQUIPMENT MAINTENANCE</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="preview-placeholder canopy">
-                            <div class="scan-line"></div>
+                        <div class="preview-placeholder offline-state">
+                            <div class="offline-message">SIGNAL LOST</div>
                         </div>
                     </div>
                     
