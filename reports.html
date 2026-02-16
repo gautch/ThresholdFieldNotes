@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Reports - Threshold Field Notes Research Station</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Crimson+Pro:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for reports page */
+        .reports-header {
+            background: var(--color-forest-dark);
+            color: var(--color-cream);
+            padding: var(--spacing-lg) 0;
+            border-bottom: 2px solid var(--color-amber-base);
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+            margin-top: var(--spacing-md);
+        }
+
+        .filter-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--color-cream);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tag:hover,
+        .filter-tag.active {
+            background: var(--color-amber-base);
+            color: var(--color-charcoal);
+            border-color: var(--color-amber-base);
+        }
+
+        .report-full {
+            background: white;
+            border-left: 4px solid var(--color-forest-base);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .report-full.featured {
+            border-left-color: var(--color-amber-base);
+            box-shadow: var(--shadow-md);
+        }
+
+        .report-full-header {
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--color-parchment);
+        }
+
+        .report-full-meta {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--color-forest-mid);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .meta-badge {
+            padding: 0.25rem 0.75rem;
+            background: var(--color-parchment);
+            border-left: 2px solid var(--color-forest-base);
+        }
+
+        .meta-badge.location {
+            border-left-color: var(--color-amber-base);
+            background: rgba(255, 136, 0, 0.1);
+        }
+
+        .report-full-title {
+            font-size: 2rem;
+            color: var(--color-forest-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .report-conditions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--color-parchment);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+
+        .condition-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .condition-label {
+            color: var(--color-forest-mid);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .condition-value {
+            color: var(--color-charcoal);
+            font-weight: 500;
+        }
+
+        .report-body {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--color-charcoal);
+        }
+
+        .report-body p {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .report-observation {
+            background: rgba(255, 136, 0, 0.05);
+            border-left: 3px solid var(--color-amber-base);
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            font-style: italic;
+        }
+
+        .report-image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-sm);
+            margin: var(--spacing-md) 0;
+        }
+
+        .report-image {
+            aspect-ratio: 16/9;
+            background: var(--color-charcoal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a3a1a 0%, #2a4a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            color: var(--color-amber-light);
+            font-size: 0.8rem;
+        }
+
+        .report-notes {
+            background: var(--color-cream);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+            border: 1px solid var(--color-parchment);
+        }
+
+        .report-notes-title {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-forest-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .report-notes ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .report-notes li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .report-notes li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-amber-base);
+        }
+
+        .report-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: var(--spacing-md);
+        }
+
+        .status-investigating {
+            background: rgba(255, 170, 0, 0.1);
+            color: var(--color-warning);
+            border: 1px solid var(--color-warning);
+        }
+
+        .status-unexplained {
+            background: rgba(255, 68, 68, 0.1);
+            color: var(--color-alert);
+            border: 1px solid var(--color-alert);
+        }
+
+        .status-resolved {
+            background: rgba(68, 255, 136, 0.1);
+            color: var(--color-success);
+            border: 1px solid var(--color-success);
+        }
+
+        .pagination {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        .page-number {
+            padding: 0.75rem 1.25rem;
+            background: white;
+            border: 1px solid var(--color-parchment);
+            font-family: var(--font-mono);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-number:hover,
+        .page-number.active {
+            background: var(--color-amber-base);
+            color: var(--color-charcoal);
+            border-color: var(--color-amber-base);
+        }
+    </style>
+</head>
+<body>
+    <div class="topo-background"></div>
+    
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-top">
+            <div class="status-bar">
+                <span class="status-item">
+                    <span class="status-dot active"></span>
+                    SYS OPERATIONAL
+                </span>
+                <span class="status-item">
+                    <span class="status-dot"></span>
+                    6 FEEDS ACTIVE
+                </span>
+                <span class="status-item timestamp" id="current-time">
+                    2026.02.14 / 14:23:17 EST
+                </span>
+            </div>
+        </div>
+        
+        <div class="header-main container">
+            <div class="site-logo">
+                <!-- Option 1: Underlined version (primary) -->
+                <img src="Boxed.png" alt="Threshold Field Notes" class="logo-img logo-underlined">
+                
+                <div class="logo-subtitle">RESEARCH STATION</div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="observatory.html" class="nav-link">LIVE OBSERVATORY</a>
+                <a href="reports.html" class="nav-link active">FIELD REPORTS</a>
+                <a href="residency.html" class="nav-link">RESIDENCY</a>
+                <a href="gear.html" class="nav-link">FIELD GEAR</a>
+                <a href="about.html" class="nav-link">ABOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="reports-header">
+        <div class="container">
+            <h1 class="section-title">FIELD REPORTS</h1>
+            <p class="section-subtitle">Observations, Incidents, and Ongoing Investigations</p>
+            
+            <div class="filter-bar">
+                <button class="filter-tag active">All Reports</button>
+                <button class="filter-tag">Incidents</button>
+                <button class="filter-tag">Wildlife</button>
+                <button class="filter-tag">Equipment</button>
+                <button class="filter-tag">Atmospheric</button>
+                <button class="filter-tag">Unexplained</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Report -->
+    <section class="section">
+        <div class="container">
+            <article class="report-full featured">
+                <div class="report-full-header">
+                    <div class="report-full-meta">
+                        <span class="meta-badge">2026.02.12</span>
+                        <span class="meta-badge">23:47:23 EST</span>
+                        <span class="meta-badge location">PERIMETER-W</span>
+                        <span class="report-tag incident">INCIDENT</span>
+                    </div>
+                    
+                    <h2 class="report-full-title">Unexplained Bipedal Movement Detected at Western Boundary</h2>
+                    
+                    <div class="report-conditions">
+                        <div class="condition-item">
+                            <span class="condition-label">Weather</span>
+                            <span class="condition-value">Clear, 28°F</span>
+                        </div>
+                        <div class="condition-item">
+                            <span class="condition-label">Moon Phase</span>
+                            <span class="condition-value">Waning Gibbous (73%)</span>
+                        </div>
+                        <div class="condition-item">
+                            <span class="condition-label">Visibility</span>
+                            <span class="condition-value">Excellent</span>
+                        </div>
+                        <div class="condition-item">
+                            <span class="condition-label">Personnel</span>
+                            <span class="condition-value">Automated detection</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-body">
+                    <p>At precisely 23:47:23 EST, PERIMETER-W motion sensors triggered a Level 3 alert indicating significant movement along the western property boundary. Initial review of the footage showed movement consistent with a large terrestrial animal crossing the monitored zone.</p>
+
+                    <p>Enhanced analysis revealed several anomalies inconsistent with known regional wildlife:</p>
+
+                    <div class="report-observation">
+                        <strong>Primary Observation:</strong> Subject moved through frame in approximately 4.2 seconds, covering an estimated 18 feet. Gait analysis indicates bipedal locomotion with stride length of 4.5-5 feet. Height estimate based on reference markers: 6'4" to 7'2".
+                    </div>
+
+                    <div class="report-image-grid">
+                        <div class="report-image">
+                            <div class="image-placeholder">
+                                FRAME 001 / 23:47:23<br>ENHANCED
+                            </div>
+                        </div>
+                        <div class="report-image">
+                            <div class="image-placeholder">
+                                FRAME 018 / 23:47:25<br>ENHANCED
+                            </div>
+                        </div>
+                        <div class="report-image">
+                            <div class="image-placeholder">
+                                FRAME 034 / 23:47:27<br>ENHANCED
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>Cross-reference with regional wildlife databases produced no matches. Black bear (Ursus americanus) was initially considered, however:</p>
+
+                    <ul style="list-style: none; padding-left: 1rem;">
+                        <li style="margin-bottom: 0.5rem;">→ Movement pattern shows consistent bipedal locomotion, not typical bear behavior</li>
+                        <li style="margin-bottom: 0.5rem;">→ Stride length exceeds documented black bear parameters</li>
+                        <li style="margin-bottom: 0.5rem;">→ No corresponding tracks found during daylight investigation of area</li>
+                        <li style="margin-bottom: 0.5rem;">→ Ambient temperature (28°F) makes extended bipedal movement by bear highly unlikely</li>
+                    </ul>
+
+                    <p>Audio analysis detected no vocalizations. Thermal imaging (retrospective analysis) shows heat signature consistent with large mammal, though thermal resolution at range limits detailed analysis.</p>
+
+                    <div class="report-notes">
+                        <div class="report-notes-title">Investigation Notes:</div>
+                        <ul>
+                            <li>Ground survey conducted 02/13 at 08:00 EST - no physical evidence recovered</li>
+                            <li>Camera system verified operational, no equipment malfunction detected</li>
+                            <li>Cross-referenced with previous incidents: similar event logged 01/28 at STATION-X (offline)</li>
+                            <li>Motion detection sensitivity increased for PERIMETER-W zone</li>
+                            <li>Local wildlife services notified as protocol requires</li>
+                            <li>Follow-up observation schedule implemented</li>
+                        </ul>
+                    </div>
+
+                    <p>This incident has been classified as unexplained pending further investigation. All footage has been archived and is available for review by qualified observers. Community reports of similar observations in the area are encouraged.</p>
+
+                    <span class="report-status status-investigating">STATUS: UNDER INVESTIGATION</span>
+                </div>
+            </article>
+
+            <!-- Additional Reports -->
+            <article class="report-full">
+                <div class="report-full-header">
+                    <div class="report-full-meta">
+                        <span class="meta-badge">2026.02.10</span>
+                        <span class="meta-badge">03:17:42 EST</span>
+                        <span class="meta-badge location">CANOPY-02</span>
+                        <span class="report-tag equipment">EQUIPMENT</span>
+                    </div>
+                    
+                    <h2 class="report-full-title">Recurring Recording Interruption - Pattern Analysis</h2>
+                </div>
+
+                <div class="report-body">
+                    <p>CANOPY-02 experienced its seventh recording interruption this month. As with previous occurrences, the two-minute gap (03:17:42 to 03:19:42 EST) shows no technical explanation.</p>
+
+                    <p>System diagnostics confirm:</p>
+                    
+                    <div class="report-observation">
+                        No power fluctuation detected. No storage device errors. No network connectivity issues. Camera simply stopped recording, then resumed exactly 120 seconds later with no data corruption or system reboot required.
+                    </div>
+
+                    <p>All seven incidents share characteristics:</p>
+                    
+                    <div class="report-notes">
+                        <div class="report-notes-title">Pattern Recognition:</div>
+                        <ul>
+                            <li>All occur between 03:00-04:00 EST</li>
+                            <li>All exactly 120 seconds in duration</li>
+                            <li>All during clear weather conditions</li>
+                            <li>Camera resumes without manual intervention</li>
+                            <li>No other station cameras affected during same windows</li>
+                        </ul>
+                    </div>
+
+                    <p>Camera has been replaced as precautionary measure. Previous camera (exhibiting same behavior) will be sent for forensic analysis.</p>
+
+                    <span class="report-status status-investigating">STATUS: ONGOING MONITORING</span>
+                </div>
+            </article>
+
+            <article class="report-full">
+                <div class="report-full-header">
+                    <div class="report-full-meta">
+                        <span class="meta-badge">2026.02.08</span>
+                        <span class="meta-badge">19:34:11 EST</span>
+                        <span class="meta-badge location">WOODLAND-01</span>
+                        <span class="report-tag wildlife">WILDLIFE</span>
+                    </div>
+                    
+                    <h2 class="report-full-title">White-Tailed Deer Behavioral Pattern Documentation</h2>
+                </div>
+
+                <div class="report-body">
+                    <p>Single white-tailed deer (Odocoileus virginianus) observed crossing Zone 2 via standard migration route. Animal paused at coordinates 43.XX.XX / 70.XX.XX for four minutes, facing due south.</p>
+
+                    <p>This represents the third instance this week of a deer pausing at this specific location. Previous incidents: 02/06 (5 minutes, facing south) and 02/04 (3.5 minutes, facing south).</p>
+
+                    <div class="report-observation">
+                        Deer exhibited no signs of distress or unusual behavior during pause. No obvious environmental factors (food source, hazard, etc.) identified at location. Animal eventually continued along standard route without incident.
+                    </div>
+
+                    <p>Ground survey of pause location conducted 02/09 revealed no distinguishing features. Soil samples collected for analysis. Location has been flagged for continued observation.</p>
+
+                    <span class="report-status status-resolved">STATUS: DOCUMENTED - ONGOING OBSERVATION</span>
+                </div>
+            </article>
+
+            <article class="report-full">
+                <div class="report-full-header">
+                    <div class="report-full-meta">
+                        <span class="meta-badge">2026.02.05</span>
+                        <span class="meta-badge">02:14:33 EST</span>
+                        <span class="meta-badge location">SKY-OBS</span>
+                        <span class="report-tag incident">ATMOSPHERIC</span>
+                    </div>
+                    
+                    <h2 class="report-full-title">Atmospheric Light Phenomenon - Event LS-026</h2>
+                </div>
+
+                <div class="report-body">
+                    <p>SKY-OBS all-sky camera captured unusual light source at 02:14:33 EST. Initial observation by community observer M. Torres, later confirmed by automated detection systems.</p>
+
+                    <div class="report-observation">
+                        Light source appeared in northwestern quadrant, duration approximately 7 seconds. Movement pattern inconsistent with aircraft, satellite, or meteor. No corresponding radar signature. Weather conditions: clear, no precipitation, no electrical storm activity within 200 miles.
+                    </div>
+
+                    <div class="report-image-grid">
+                        <div class="report-image">
+                            <div class="image-placeholder">
+                                ALL-SKY VIEW<br>02:14:33
+                            </div>
+                        </div>
+                        <div class="report-image">
+                            <div class="image-placeholder">
+                                ENHANCED SECTOR<br>NORTHWEST
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>Cross-reference with astronomical databases showed no scheduled celestial events. FAA confirmed no aircraft in vicinity. NOAA data shows no atmospheric anomalies.</p>
+
+                    <div class="report-notes">
+                        <div class="report-notes-title">Analysis Status:</div>
+                        <ul>
+                            <li>Spectral analysis: In progress</li>
+                            <li>Similar historical events: 4 documented since 2025</li>
+                            <li>Community observer reports: 2 additional witnesses</li>
+                            <li>External expert consultation: Pending</li>
+                        </ul>
+                    </div>
+
+                    <span class="report-status status-unexplained">STATUS: UNEXPLAINED - INVESTIGATION CONTINUES</span>
+                </div>
+            </article>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-number active">1</button>
+                <button class="page-number">2</button>
+                <button class="page-number">3</button>
+                <button class="page-number">4</button>
+                <button class="page-number">→</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="Boxed.png" alt="Threshold Field Notes" class="footer-logo-img">
+                    </div>
+                    <p class="footer-description">
+                        Observing the unexplained in rural Maine since 2025.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Navigate</h4>
+                    <ul class="footer-links">
+                        <li><a href="observatory.html">Live Observatory</a></li>
+                        <li><a href="reports.html">Field Reports</a></li>
+                        <li><a href="residency.html">Research Residency</a></li>
+                        <li><a href="gear.html">Field Gear</a></li>
+                        <li><a href="about.html">About Station</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Observer Updates</h4>
+                    <p class="footer-text">
+                        Receive notifications of significant events and incident reports.
+                    </p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="your@email.com" class="newsletter-input">
+                        <button type="submit" class="newsletter-btn">SUBSCRIBE</button>
+                    </form>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Station Info</h4>
+                    <div class="footer-info">
+                        <p>1.84 acres monitored</p>
+                        <p>Southern Maine</p>
+                        <p>24/7 observation active</p>
+                        <p class="coordinates">43°XX'XX"N 70°XX'XX"W</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 Threshold Field Notes Research Station. All observations documented.</p>
+                <p class="disclaimer">
+                    The property, cameras, and wildlife are real. Everything else... you decide.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

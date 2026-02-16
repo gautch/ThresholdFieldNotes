@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Observatory - FIELDNOTES Research Station</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Crimson+Pro:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for observatory page */
+        .observatory-header {
+            background: var(--color-forest-dark);
+            color: var(--color-cream);
+            padding: var(--spacing-lg) 0;
+            border-bottom: 2px solid var(--color-amber-base);
+        }
+
+        .observatory-controls {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .control-label {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-amber-light);
+        }
+
+        .control-toggle {
+            padding: 0.5rem 1rem;
+            background: var(--color-charcoal-light);
+            border: 1px solid var(--color-forest-mid);
+            color: var(--color-cream);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-toggle:hover,
+        .control-toggle.active {
+            background: var(--color-amber-base);
+            color: var(--color-charcoal);
+            border-color: var(--color-amber-base);
+        }
+
+        .feed-viewer {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .main-feed {
+            background: var(--color-charcoal);
+            position: relative;
+            /* aspect-ratio: 16/9; */
+            height: fit-content;
+
+        }
+
+        .video-container {
+            width: 100%;
+            aspect-ratio: 16 / 9; /* Sets the container to a 16:9 ratio */
+            }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            }
+
+
+
+        .feed-controls-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: var(--spacing-sm);
+            background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .feed-button {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--color-cream);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feed-button:hover {
+            background: var(--color-amber-base);
+            color: var(--color-charcoal);
+            border-color: var(--color-amber-base);
+        }
+
+        .feed-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .feed-thumbnail {
+            aspect-ratio: 16/9;
+            background: var(--color-charcoal);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .feed-thumbnail:hover {
+            border-color: var(--color-amber-base);
+        }
+
+        .feed-thumbnail.active {
+            border-color: var(--color-amber-base);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .event-log {
+            background: white;
+            border: 2px solid var(--color-parchment);
+            padding: var(--spacing-md);
+        }
+
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--color-parchment);
+        }
+
+        .log-title {
+            font-family: var(--font-sans);
+            font-size: 1.2rem;
+            color: var(--color-forest-dark);
+        }
+
+        .log-entries {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            padding: var(--spacing-sm);
+            border-left: 2px solid var(--color-parchment);
+            margin-bottom: var(--spacing-sm);
+            transition: all 0.3s ease;
+        }
+
+        .log-entry:hover {
+            border-left-color: var(--color-amber-base);
+            background: var(--color-parchment);
+        }
+
+        .log-entry.anomaly {
+            border-left-color: var(--color-alert);
+            background: rgba(255, 68, 68, 0.05);
+        }
+
+        .log-timestamp {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-amber-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .log-camera {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--color-forest-mid);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .log-message {
+            font-size: 0.9rem;
+            color: var(--color-charcoal-light);
+        }
+
+        .report-form {
+            background: white;
+            border: 2px solid var(--color-parchment);
+            padding: var(--spacing-md);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .form-label {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--color-forest-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--color-parchment);
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            background: var(--color-cream);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--color-amber-base);
+            border: none;
+            color: var(--color-charcoal);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            background: var(--color-amber-dark);
+        }
+
+        @media (max-width: 1024px) {
+            .feed-viewer {
+                grid-template-columns: 1fr;
+            }
+            
+            .feed-sidebar {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topo-background"></div>
+    
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-top">
+            <div class="status-bar">
+                <span class="status-item">
+                    <span class="status-dot active"></span>
+                    SYS OPERATIONAL
+                </span>
+                <span class="status-item">
+                    <span class="status-dot"></span>
+                    6 FEEDS ACTIVE
+                </span>
+                <span class="status-item timestamp" id="current-time">
+                    2026.02.14 / 14:23:17 EST
+                </span>
+            </div>
+        </div>
+        
+        <div class="header-main container">
+            <div class="site-logo">
+                <!-- Option 1: Underlined version (primary) -->
+                <img src="Boxed.png" alt="Threshold Field Notes" class="logo-img logo-underlined">
+                
+                <div class="logo-subtitle">RESEARCH STATION</div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="observatory.html" class="nav-link active">LIVE OBSERVATORY</a>
+                <a href="reports.html" class="nav-link">FIELD REPORTS</a>
+                <a href="residency.html" class="nav-link">RESIDENCY</a>
+                <a href="gear.html" class="nav-link">FIELD GEAR</a>
+                <a href="about.html" class="nav-link">ABOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="observatory-header">
+        <div class="container">
+            <h1 class="section-title">LIVE OBSERVATION NETWORK</h1>
+            <p class="section-subtitle">Real-time monitoring across 1.84 acres</p>
+            
+            <div class="observatory-controls">
+                <div class="control-group">
+                    <span class="control-label">View:</span>
+                    <button class="control-toggle active">Live</button>
+                    <button class="control-toggle">Recent Captures</button>
+                </div>
+                
+                <div class="control-group">
+                    <span class="control-label">Quality:</span>
+                    <button class="control-toggle">SD</button>
+                    <button class="control-toggle active">HD</button>
+                </div>
+                
+                <div class="control-group">
+                    <span class="control-label">Night Vision:</span>
+                    <button class="control-toggle">Auto</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feed Viewer -->
+    <section class="section">
+        <div class="container">
+            <div class="feed-viewer">
+                <div class="main-feed">
+                    <div class="camera-overlay">
+                        <div class="overlay-header">
+                            <span class="camera-id">WOODLAND-01</span>
+                            <span class="camera-status active">● LIVE</span>
+                        </div>
+                        <div class="overlay-footer">
+                            <span class="timestamp">2026.02.14 / 14:23:17 EST</span>
+                        </div>
+                    </div>
+                    <div class="preview-placeholder">
+                        <div class="scan-line"></div>
+                        <div class="video-container">
+                            <iframe
+                                src="https://www.youtube.com/embed/v-q1pwoZUPs?si=-HuT_Gefner14IxL"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen></iframe>
+                          </div>
+                          
+                    </div>
+                    <div class="feed-controls-bar">
+                        <button class="feed-button">SNAPSHOT</button>
+                        <button class="feed-button">RECORD</button>
+                        <button class="feed-button">REPORT ANOMALY</button>
+                    </div>
+                </div>
+                
+                <div class="feed-sidebar">
+                    <div class="feed-thumbnail active">
+                        <div class="camera-overlay">
+                            <div class="overlay-header">
+                                <span class="camera-id" style="font-size: 0.65rem;">WOODLAND-02</span>
+                            </div>
+                        </div>
+                        <div class="preview-placeholder">
+                            <div class="scan-line"></div>
+                            <img src="placeholders/20251224_154725.jpg" alt="A beautiful sunset over the ocean" width="500" height="300">
+                        </div>
+                    </div>
+                    
+                    <div class="feed-thumbnail">
+                        <div class="camera-overlay">
+                            <div class="overlay-header">
+                                <span class="camera-id" style="font-size: 0.65rem;">SKY-OBS</span>
+                            </div>
+                        </div>
+                        <div class="preview-placeholder sky">
+                            <div class="scan-line"></div>
+                            <img src="placeholders/20260119_204419.jpg" alt="A beautiful sunset over the ocean" width="500" height="300">
+
+                        </div>
+                    </div>
+                    
+                    <div class="feed-thumbnail">
+                        <div class="camera-overlay">
+                            <div class="overlay-header">
+                                <span class="camera-id" style="font-size: 0.65rem;">BAT-HOUSE-A</span>
+                            </div>
+                        </div>
+                        <div class="preview-placeholder thermal">
+                            <div class="scan-line"></div>
+                            <img src="placeholders/9174419-scaled.jpg" alt="A beautiful sunset over the ocean" width="500" height="300">
+                        </div>
+                    </div>
+                    
+                    <div class="feed-thumbnail">
+                        <div class="camera-overlay">
+                            <div class="overlay-header">
+                                <span class="camera-id" style="font-size: 0.65rem;">CANOPY-02</span>
+                            </div>
+                        </div>
+                        <div class="preview-placeholder canopy">
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="feed-thumbnail">
+                        <div class="camera-overlay">
+                            <div class="overlay-header">
+                                <span class="camera-id" style="font-size: 0.65rem;">PERIMETER-W</span>
+                            </div>
+                        </div>
+                        <div class="preview-placeholder perimeter">
+                            <div class="scan-line"></div>
+                            <img src="placeholders/20260119_133511.jpg" alt="A beautiful sunset over the ocean" width="500" height="300">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Log -->
+    <section class="section" style="padding-top: 0;">
+        <div class="container">
+            <div class="event-log">
+                <div class="log-header">
+                    <h3 class="log-title">MOTION EVENT LOG</h3>
+                    <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-forest-mid);">
+                        LAST 24 HOURS
+                    </span>
+                </div>
+                
+                <div class="log-entries">
+                    <div class="log-entry anomaly">
+                        <div class="log-timestamp">2026.02.14 / 03:47:23 EST</div>
+                        <div class="log-camera">PERIMETER-W</div>
+                        <div class="log-message">
+                            Large motion detected. Height estimate: 6-7ft. Bipedal movement pattern. 
+                            Duration: 4 seconds. Event flagged for review.
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry">
+                        <div class="log-timestamp">2026.02.14 / 13:47:11 EST</div>
+                        <div class="log-camera">WOODLAND-01</div>
+                        <div class="log-message">
+                            White-tailed deer. Single individual. Standard behavior. Event cleared.
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry">
+                        <div class="log-timestamp">2026.02.14 / 12:34:56 EST</div>
+                        <div class="log-camera">CANOPY-02</div>
+                        <div class="log-message">
+                            Bird activity. Species: Blue Jay. Multiple individuals. Event cleared.
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry">
+                        <div class="log-timestamp">2026.02.14 / 11:22:08 EST</div>
+                        <div class="log-camera">BAT-HOUSE-A</div>
+                        <div class="log-message">
+                            Thermal signature detected. Colony activity within normal range.
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry anomaly">
+                        <div class="log-timestamp">2026.02.14 / 08:15:33 EST</div>
+                        <div class="log-camera">SKY-OBS</div>
+                        <div class="log-message">
+                            Atmospheric anomaly. Light source detected. Duration: 7 seconds. 
+                            No aircraft on radar. Weather conditions: clear. Event under investigation.
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry">
+                        <div class="log-timestamp">2026.02.14 / 06:03:44 EST</div>
+                        <div class="log-camera">WOODLAND-01</div>
+                        <div class="log-message">
+                            Fox sighting. Single individual. Standard behavior. Event cleared.
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry">
+                        <div class="log-timestamp">2026.02.13 / 22:41:19 EST</div>
+                        <div class="log-camera">PERIMETER-W</div>
+                        <div class="log-message">
+                            Motion detected. Raccoon. Standard foraging behavior. Event cleared.
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry">
+                        <div class="log-timestamp">2026.02.13 / 19:28:52 EST</div>
+                        <div class="log-camera">BAT-HOUSE-A</div>
+                        <div class="log-message">
+                            Evening emergence. Population estimate: 47 individuals. Standard activity.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Report Form -->
+    <section class="section" style="padding-top: 0;">
+        <div class="container-narrow">
+            <div class="report-form">
+                <h3 style="font-size: 1.5rem; margin-bottom: var(--spacing-md); color: var(--color-forest-dark);">
+                    REPORT SIGHTING
+                </h3>
+                <p style="margin-bottom: var(--spacing-md); color: var(--color-charcoal-light);">
+                    Observed something unusual? Submit a report with the timestamp and camera ID. 
+                    All submissions are reviewed and added to our investigation database.
+                </p>
+                
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">Camera ID</label>
+                        <input type="text" class="form-input" placeholder="e.g., WOODLAND-01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Timestamp</label>
+                        <input type="text" class="form-input" placeholder="YYYY.MM.DD / HH:MM:SS EST" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Observer Email</label>
+                        <input type="email" class="form-input" placeholder="your@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" placeholder="Describe what you observed. Include any relevant details about movement, duration, or unusual characteristics." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="form-submit">SUBMIT REPORT</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="Boxed.png" alt="Threshold Field Notes" class="footer-logo-img">
+                    </div>
+                    <p class="footer-description">
+                        Observing the unexplained in rural Maine since 2025.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Navigate</h4>
+                    <ul class="footer-links">
+                        <li><a href="observatory.html">Live Observatory</a></li>
+                        <li><a href="reports.html">Field Reports</a></li>
+                        <li><a href="residency.html">Research Residency</a></li>
+                        <li><a href="gear.html">Field Gear</a></li>
+                        <li><a href="about.html">About Station</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Observer Updates</h4>
+                    <p class="footer-text">
+                        Receive notifications of significant events and incident reports.
+                    </p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="your@email.com" class="newsletter-input">
+                        <button type="submit" class="newsletter-btn">SUBSCRIBE</button>
+                    </form>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Station Info</h4>
+                    <div class="footer-info">
+                        <p>1.84 acres monitored</p>
+                        <p>Southern Maine</p>
+                        <p>24/7 observation active</p>
+                        <p class="coordinates">43°XX'XX"N 70°XX'XX"W</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 Fieldnotes Research Station. All observations documented.</p>
+                <p class="disclaimer">
+                    The property, cameras, and wildlife are real. Everything else... you decide.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

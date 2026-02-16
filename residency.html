@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Residency - Threshold Field Notes Research Station</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Crimson+Pro:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for residency page */
+        .residency-hero {
+            background: linear-gradient(135deg, var(--color-forest-dark) 0%, var(--color-forest-mid) 100%);
+            color: var(--color-cream);
+            padding: var(--spacing-xl) 0;
+            position: relative;
+        }
+
+        .residency-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255, 255, 255, 0.02) 50px, rgba(255, 255, 255, 0.02) 51px);
+            pointer-events: none;
+        }
+
+        .residency-content {
+            position: relative;
+            max-width: 800px;
+        }
+
+        .residency-quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--color-amber-light);
+            margin-bottom: var(--spacing-md);
+            border-left: 3px solid var(--color-amber-base);
+            padding-left: var(--spacing-md);
+        }
+
+        .includes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .includes-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: var(--spacing-md);
+            transition: all 0.3s ease;
+        }
+
+        .includes-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--color-amber-base);
+            transform: translateY(-4px);
+        }
+
+        .includes-icon {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .includes-title {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-amber-light);
+        }
+
+        .includes-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(245, 241, 232, 0.8);
+        }
+
+        .space-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .space-image {
+            aspect-ratio: 4/3;
+            background: var(--color-charcoal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            color: var(--color-amber-light);
+            font-size: 0.9rem;
+        }
+
+        .space-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-sm);
+        }
+
+        .feature-badge {
+            background: white;
+            padding: var(--spacing-sm);
+            border-left: 2px solid var(--color-forest-base);
+            font-size: 0.9rem;
+        }
+
+        .calendar-section {
+            background: white;
+            padding: var(--spacing-lg);
+            border: 2px solid var(--color-parchment);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .calendar-title {
+            font-size: 1.5rem;
+            color: var(--color-forest-dark);
+        }
+
+        .calendar-legend {
+            display: flex;
+            gap: var(--spacing-sm);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.available {
+            background: var(--color-success);
+        }
+
+        .legend-dot.priority {
+            background: var(--color-amber-base);
+        }
+
+        .legend-dot.reserved {
+            background: var(--color-charcoal-light);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            background: var(--color-cream);
+            border: 1px solid var(--color-parchment);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-day.header {
+            background: var(--color-forest-dark);
+            color: var(--color-cream);
+            font-weight: 600;
+            cursor: default;
+        }
+
+        .calendar-day.available {
+            background: rgba(68, 255, 136, 0.1);
+            border-color: var(--color-success);
+        }
+
+        .calendar-day.available:hover {
+            background: rgba(68, 255, 136, 0.2);
+            transform: scale(1.05);
+        }
+
+        .calendar-day.priority {
+            background: rgba(255, 136, 0, 0.1);
+            border-color: var(--color-amber-base);
+        }
+
+        .calendar-day.reserved {
+            background: var(--color-charcoal-light);
+            color: var(--color-cream);
+            cursor: not-allowed;
+        }
+
+        .application-form {
+            background: white;
+            padding: var(--spacing-lg);
+            border: 2px solid var(--color-parchment);
+        }
+
+        .form-section {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-section-title {
+            font-size: 1.3rem;
+            color: var(--color-forest-dark);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--color-parchment);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .testimonial {
+            background: white;
+            padding: var(--spacing-md);
+            border-left: 3px solid var(--color-forest-base);
+        }
+
+        .testimonial-quote {
+            font-style: italic;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--color-forest-mid);
+        }
+
+        .testimonial-role {
+            font-size: 0.8rem;
+            color: var(--color-charcoal-light);
+        }
+
+        .rates-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-md) 0;
+        }
+
+        .rates-table th,
+        .rates-table td {
+            padding: var(--spacing-sm);
+            text-align: left;
+            border-bottom: 1px solid var(--color-parchment);
+        }
+
+        .rates-table th {
+            background: var(--color-forest-dark);
+            color: var(--color-cream);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .rates-table td {
+            font-size: 0.95rem;
+        }
+
+        .rate-price {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--color-amber-dark);
+        }
+
+        @media (max-width: 768px) {
+            .space-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 0.25rem;
+            }
+
+            .calendar-day {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topo-background"></div>
+    
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-top">
+            <div class="status-bar">
+                <span class="status-item">
+                    <span class="status-dot active"></span>
+                    SYS OPERATIONAL
+                </span>
+                <span class="status-item">
+                    <span class="status-dot"></span>
+                    6 FEEDS ACTIVE
+                </span>
+                <span class="status-item timestamp" id="current-time">
+                    2026.02.14 / 14:23:17 EST
+                </span>
+            </div>
+        </div>
+        
+        <div class="header-main container">
+            <div class="site-logo">
+                <!-- Option 1: Underlined version (primary) -->
+                <img src="Boxed.png" alt="Threshold Field Notes" class="logo-img logo-underlined">
+                
+                <div class="logo-subtitle">RESEARCH STATION</div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="observatory.html" class="nav-link">LIVE OBSERVATORY</a>
+                <a href="reports.html" class="nav-link">FIELD REPORTS</a>
+                <a href="residency.html" class="nav-link active">RESIDENCY</a>
+                <a href="gear.html" class="nav-link">FIELD GEAR</a>
+                <a href="about.html" class="nav-link">ABOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="residency-hero">
+        <div class="container">
+            <div class="residency-content">
+                <h1 class="hero-title" style="margin-bottom: var(--spacing-md);">
+                    RESEARCHER-IN-RESIDENCE PROGRAM
+                </h1>
+                
+                <p class="residency-quote">
+                    "On-site accommodation for qualified observers conducting independent field studies. 
+                    Previous residents have documented 47 unexplained events from the apartment's observation deck. 
+                    Many return for follow-up investigations."
+                </p>
+
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: var(--spacing-md);">
+                    The Threshold Field Notes Research Station maintains a single Researcher-in-Residence 
+                    apartment for serious investigators. Located directly on the property with access to all 
+                    monitoring equipment and observation points, residency positions offer a unique opportunity 
+                    to engage with Maine's wilderness and... whatever else may be present.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#apply" class="btn btn-primary">APPLY FOR RESIDENCY</a>
+                    <a href="#availability" class="btn btn-secondary">CHECK AVAILABILITY</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Included -->
+    <section class="section" style="background: var(--color-cream);">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; margin-bottom: var(--spacing-lg);">
+                RESIDENCY INCLUDES
+            </h2>
+
+            <div class="includes-grid">
+                <div class="includes-item">
+                    <div class="includes-icon">🏠</div>
+                    <h3 class="includes-title">Private Studio Apartment</h3>
+                    <p class="includes-description">
+                        Full kitchen, bathroom, workspace, and sleeping area. Modern amenities in a rustic setting.
+                    </p>
+                </div>
+
+                <div class="includes-item">
+                    <div class="includes-icon">📹</div>
+                    <h3 class="includes-title">24/7 Feed Access</h3>
+                    <p class="includes-description">
+                        Secure portal access to all live camera feeds. Multi-monitor observation desk included.
+                    </p>
+                </div>
+
+                <div class="includes-item">
+                    <div class="includes-icon">🔬</div>
+                    <h3 class="includes-title">Equipment Privileges</h3>
+                    <p class="includes-description">
+                        Checkout access to field equipment including night vision, thermal imaging, and recording devices.
+                    </p>
+                </div>
+
+                <div class="includes-item">
+                    <div class="includes-icon">📊</div>
+                    <h3 class="includes-title">Data Archive Access</h3>
+                    <p class="includes-description">
+                        Historical observation data, incident reports, and documented anomalies available for research.
+                    </p>
+                </div>
+
+                <div class="includes-item">
+                    <div class="includes-icon">🌙</div>
+                    <h3 class="includes-title">Night Shift Priority</h3>
+                    <p class="includes-description">
+                        Optional participation in night observation shifts when peak activity occurs.
+                    </p>
+                </div>
+
+                <div class="includes-item">
+                    <div class="includes-icon">📝</div>
+                    <h3 class="includes-title">Filing Credentials</h3>
+                    <p class="includes-description">
+                        Official incident report filing privileges. Your observations become part of our research record.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Space -->
+    <section class="section" style="background: var(--color-parchment);">
+        <div class="container">
+            <h2 class="section-title">THE SPACE</h2>
+            <p class="section-subtitle" style="margin-bottom: var(--spacing-lg);">
+                Modern comfort meets field research capability
+            </p>
+
+            <div class="space-grid">
+                <div>
+                    <div class="space-image" style="margin-bottom: var(--spacing-sm);">
+                        APARTMENT EXTERIOR<br>VIEW FROM WOODLAND-01
+                    </div>
+                    <div class="space-image">
+                        OBSERVATION DECK<br>MULTI-MONITOR SETUP
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: var(--spacing-md); color: var(--color-forest-dark);">
+                        Accommodations
+                    </h3>
+                    
+                    <div class="space-features">
+                        <div class="feature-badge">Sleeps: 2</div>
+                        <div class="feature-badge">Full Kitchen</div>
+                        <div class="feature-badge">Private Bath</div>
+                        <div class="feature-badge">Workspace</div>
+                        <div class="feature-badge">WiFi</div>
+                        <div class="feature-badge">Climate Control</div>
+                        <div class="feature-badge">Large Windows</div>
+                        <div class="feature-badge">Observation Deck</div>
+                    </div>
+
+                    <p style="margin-top: var(--spacing-md); line-height: 1.7;">
+                        The apartment overlooks monitored zones with direct sightlines to multiple camera locations. 
+                        Large windows provide natural observation opportunities, while the dedicated observation desk 
+                        features a four-monitor setup with live feed access and data analysis software.
+                    </p>
+
+                    <p style="margin-top: var(--spacing-sm); line-height: 1.7; font-style: italic; color: var(--color-charcoal-light);">
+                        The field library includes reference materials on regional wildlife, atmospheric phenomena, 
+                        and documented unexplained events. Some previous residents have added their own field notes 
+                        to the collection.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Availability Calendar -->
+    <section class="section" id="availability">
+        <div class="container-narrow">
+            <div class="calendar-section">
+                <div class="calendar-header">
+                    <h2 class="calendar-title">MARCH 2026 AVAILABILITY</h2>
+                    <div class="calendar-legend">
+                        <div class="legend-item">
+                            <div class="legend-dot available"></div>
+                            <span>Available</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot priority"></div>
+                            <span>Priority Window</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot reserved"></div>
+                            <span>Reserved</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calendar-grid">
+                    <div class="calendar-day header">SUN</div>
+                    <div class="calendar-day header">MON</div>
+                    <div class="calendar-day header">TUE</div>
+                    <div class="calendar-day header">WED</div>
+                    <div class="calendar-day header">THU</div>
+                    <div class="calendar-day header">FRI</div>
+                    <div class="calendar-day header">SAT</div>
+                    
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day available">1</div>
+                    
+                    <div class="calendar-day available">2</div>
+                    <div class="calendar-day available">3</div>
+                    <div class="calendar-day available">4</div>
+                    <div class="calendar-day reserved">5</div>
+                    <div class="calendar-day reserved">6</div>
+                    <div class="calendar-day reserved">7</div>
+                    <div class="calendar-day reserved">8</div>
+                    
+                    <div class="calendar-day available">9</div>
+                    <div class="calendar-day available">10</div>
+                    <div class="calendar-day available">11</div>
+                    <div class="calendar-day available">12</div>
+                    <div class="calendar-day priority">13</div>
+                    <div class="calendar-day priority">14</div>
+                    <div class="calendar-day priority">15</div>
+                    
+                    <div class="calendar-day available">16</div>
+                    <div class="calendar-day available">17</div>
+                    <div class="calendar-day reserved">18</div>
+                    <div class="calendar-day reserved">19</div>
+                    <div class="calendar-day reserved">20</div>
+                    <div class="calendar-day reserved">21</div>
+                    <div class="calendar-day available">22</div>
+                    
+                    <div class="calendar-day available">23</div>
+                    <div class="calendar-day available">24</div>
+                    <div class="calendar-day available">25</div>
+                    <div class="calendar-day available">26</div>
+                    <div class="calendar-day available">27</div>
+                    <div class="calendar-day priority">28</div>
+                    <div class="calendar-day priority">29</div>
+                    
+                    <div class="calendar-day priority">30</div>
+                    <div class="calendar-day priority">31</div>
+                </div>
+
+                <p style="margin-top: var(--spacing-md); font-size: 0.9rem; color: var(--color-charcoal-light);">
+                    <strong>Priority Observation Windows</strong> coincide with documented peak activity periods. 
+                    These dates are recommended for serious investigators. 3-night minimum stay required.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rates & Terms -->
+    <section class="section" style="background: var(--color-cream);">
+        <div class="container-narrow">
+            <h2 class="section-title">RESIDENCY TERMS</h2>
+            
+            <table class="rates-table">
+                <thead>
+                    <tr>
+                        <th>Duration</th>
+                        <th>Program Fee</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>3-Night Period</td>
+                        <td class="rate-price">$450</td>
+                        <td>Minimum stay requirement</td>
+                    </tr>
+                    <tr>
+                        <td>Weekly (7 nights)</td>
+                        <td class="rate-price">$900</td>
+                        <td>Extended observation recommended</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly</td>
+                        <td class="rate-price">Contact for rates</td>
+                        <td>For ongoing investigations</td>
+                    </tr>
+                    <tr>
+                        <td>Equipment Deposit</td>
+                        <td class="rate-price">$200</td>
+                        <td>Refundable, sensor array access</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: var(--spacing-md); padding: var(--spacing-md); background: white; border-left: 3px solid var(--color-amber-base);">
+                <h4 style="font-family: var(--font-mono); font-size: 0.9rem; text-transform: uppercase; margin-bottom: var(--spacing-sm);">
+                    Important Notes:
+                </h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 0.5rem;">→ All residents must sign liability waiver and observation protocols agreement</li>
+                    <li style="margin-bottom: 0.5rem;">→ Night shift participation is optional but encouraged during priority windows</li>
+                    <li style="margin-bottom: 0.5rem;">→ Any significant findings must be documented through proper channels</li>
+                    <li style="margin-bottom: 0.5rem;">→ Equipment checkout requires brief safety training session</li>
+                    <li style="margin-bottom: 0.5rem;">→ Property coordinates provided upon residency confirmation</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section" style="background: var(--color-parchment);">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; margin-bottom: var(--spacing-lg);">
+                PREVIOUS RESIDENT OBSERVATIONS
+            </h2>
+
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "Incredible access to undisturbed habitat. The night observation protocols yielded data 
+                        I'm still analyzing. Whatever happened on 10/31 at 03:17... I need to come back."
+                    </p>
+                    <div class="testimonial-author">— Dr. Sarah M.</div>
+                    <div class="testimonial-role">Wildlife Ecologist</div>
+                </div>
+
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "The apartment is comfortable and the camera access is unparalleled. I came for the bats. 
+                        I stayed because of the lights. Three unexplained atmospheric events in five nights."
+                    </p>
+                    <div class="testimonial-author">— Marcus T.</div>
+                    <div class="testimonial-role">Atmospheric Researcher</div>
+                </div>
+
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "Professional setup. Unexplainable results. The equipment is excellent, the documentation 
+                        protocols are thorough, and the phenomena are... persistent. Would recommend."
+                    </p>
+                    <div class="testimonial-author">— J. Rivera</div>
+                    <div class="testimonial-role">Independent Investigator</div>
+                </div>
+
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "I've stayed at research stations worldwide. This one is unique. Not just because of 
+                        the data collection capabilities, but because of what the data shows. Extended residency planned."
+                    </p>
+                    <div class="testimonial-author">— Dr. K. Chen</div>
+                    <div class="testimonial-role">Cryptozoologist</div>
+                </div>
+
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "The observation deck became my second office. Between the feeds, the archive access, 
+                        and the actual on-site phenomena, I documented more in two weeks than six months of remote research."
+                    </p>
+                    <div class="testimonial-author">— A. Morrison</div>
+                    <div class="testimonial-role">Field Researcher</div>
+                </div>
+
+                <div class="testimonial">
+                    <p class="testimonial-quote">
+                        "Came skeptical. Left... less skeptical. The apartment's position offers unmatched 
+                        observation angles. Whatever moves through those woods at night isn't in any field guide I own."
+                    </p>
+                    <div class="testimonial-author">— Dr. T. Washington</div>
+                    <div class="testimonial-role">Biologist</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="section" id="apply">
+        <div class="container-narrow">
+            <div class="application-form">
+                <h2 style="font-size: 2rem; margin-bottom: var(--spacing-sm); color: var(--color-forest-dark);">
+                    RESIDENCY APPLICATION
+                </h2>
+                <p style="margin-bottom: var(--spacing-lg); color: var(--color-charcoal-light);">
+                    Submit your application below. All fields required. Responses reviewed within 48 hours.
+                </p>
+
+                <form>
+                    <div class="form-section">
+                        <h3 class="form-section-title">Personal Information</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3 class="form-section-title">Research Details</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Research Focus</label>
+                            <textarea class="form-textarea" placeholder="Describe your primary area of investigation and what you hope to observe during your residency..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Observation Experience</label>
+                            <textarea class="form-textarea" placeholder="Detail your previous field research, observation experience, or relevant qualifications..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Equipment Requirements</label>
+                            <textarea class="form-textarea" placeholder="List any specialized equipment you'll bring or wish to checkout from our inventory..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Previous Unexplained Phenomenon Documentation</label>
+                            <textarea class="form-textarea" placeholder="If applicable, describe any previous encounters or documented anomalies... (Optional)"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3 class="form-section-title">Residency Preferences</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Preferred Dates</label>
+                            <input type="text" class="form-input" placeholder="e.g., March 13-15 or March 28-31" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Night Shift Availability</label>
+                            <div style="display: flex; gap: var(--spacing-md); margin-top: 0.5rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="radio" name="night_shift" value="yes" required>
+                                    <span>Yes, available for night observations</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="radio" name="night_shift" value="no" required>
+                                    <span>No, daytime observations only</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Additional Notes</label>
+                            <textarea class="form-textarea" placeholder="Any other information we should know about your application..."></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="form-submit">SUBMIT APPLICATION</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="Boxed.png" alt="Threshold Field Notes" class="footer-logo-img">
+                    </div>
+                    <p class="footer-description">
+                        Observing the unexplained in rural Maine since 2025.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Navigate</h4>
+                    <ul class="footer-links">
+                        <li><a href="observatory.html">Live Observatory</a></li>
+                        <li><a href="reports.html">Field Reports</a></li>
+                        <li><a href="residency.html">Research Residency</a></li>
+                        <li><a href="gear.html">Field Gear</a></li>
+                        <li><a href="about.html">About Station</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Observer Updates</h4>
+                    <p class="footer-text">
+                        Receive notifications of significant events and incident reports.
+                    </p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="your@email.com" class="newsletter-input">
+                        <button type="submit" class="newsletter-btn">SUBSCRIBE</button>
+                    </form>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Station Info</h4>
+                    <div class="footer-info">
+                        <p>1.84 acres monitored</p>
+                        <p>Southern Maine</p>
+                        <p>24/7 observation active</p>
+                        <p class="coordinates">43°XX'XX"N 70°XX'XX"W</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 Threshold Field Notes Research Station. All observations documented.</p>
+                <p class="disclaimer">
+                    The property, cameras, and wildlife are real. Everything else... you decide.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

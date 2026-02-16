@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About the Station - Threshold Field Notes Research Station</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Crimson+Pro:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for about page */
+        .about-hero {
+            background: linear-gradient(135deg, var(--color-forest-dark) 0%, var(--color-forest-mid) 100%);
+            color: var(--color-cream);
+            padding: var(--spacing-xl) 0 var(--spacing-lg);
+            position: relative;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255, 255, 255, 0.02) 50px, rgba(255, 255, 255, 0.02) 51px);
+            pointer-events: none;
+        }
+
+        .about-intro {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .about-intro h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .about-intro-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            font-style: italic;
+            color: var(--color-amber-light);
+        }
+
+        .content-section {
+            max-width: 900px;
+            margin: 0 auto var(--spacing-xl);
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            color: var(--color-forest-dark);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--color-amber-base);
+        }
+
+        .content-section p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-charcoal);
+        }
+
+        .property-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .stat-box {
+            background: white;
+            padding: var(--spacing-md);
+            border-left: 3px solid var(--color-forest-base);
+            text-align: center;
+        }
+
+        .stat-box.highlight {
+            border-left-color: var(--color-amber-base);
+            background: rgba(255, 136, 0, 0.05);
+        }
+
+        .stat-number {
+            font-family: var(--font-sans);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-amber-dark);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--color-forest-mid);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .infrastructure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+
+        .infrastructure-item {
+            background: white;
+            padding: var(--spacing-md);
+            border-left: 2px solid var(--color-forest-base);
+        }
+
+        .infrastructure-title {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            color: var(--color-forest-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .infrastructure-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--color-charcoal-light);
+        }
+
+        .philosophy-quote {
+            background: var(--color-forest-dark);
+            color: var(--color-cream);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            text-align: center;
+            border-top: 3px solid var(--color-amber-base);
+            border-bottom: 3px solid var(--color-amber-base);
+        }
+
+        .philosophy-quote p {
+            font-size: 1.5rem;
+            font-style: italic;
+            line-height: 1.6;
+            color: var(--color-amber-light);
+            margin: 0;
+        }
+
+        .team-section {
+            background: white;
+            padding: var(--spacing-lg);
+            border: 2px solid var(--color-parchment);
+        }
+
+        .team-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto var(--spacing-lg);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            border-left: 3px solid var(--color-forest-base);
+        }
+
+        .faq-question {
+            font-family: var(--font-sans);
+            font-size: 1.2rem;
+            color: var(--color-forest-dark);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .faq-answer {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--color-charcoal);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .contact-card {
+            background: white;
+            padding: var(--spacing-lg);
+            border: 2px solid var(--color-parchment);
+            text-align: center;
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .contact-card h3 {
+            font-size: 1.3rem;
+            color: var(--color-forest-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .contact-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--color-charcoal-light);
+            margin: 0;
+        }
+
+        .contact-link {
+            display: inline-block;
+            margin-top: var(--spacing-sm);
+            color: var(--color-amber-base);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        .contact-link:hover {
+            color: var(--color-amber-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="topo-background"></div>
+    
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-top">
+            <div class="status-bar">
+                <span class="status-item">
+                    <span class="status-dot active"></span>
+                    SYS OPERATIONAL
+                </span>
+                <span class="status-item">
+                    <span class="status-dot"></span>
+                    6 FEEDS ACTIVE
+                </span>
+                <span class="status-item timestamp" id="current-time">
+                    2026.02.14 / 14:23:17 EST
+                </span>
+            </div>
+        </div>
+        
+        <div class="header-main container">
+            <div class="site-logo">
+                <!-- Option 1: Underlined version (primary) -->
+                <img src="Boxed.png" alt="Threshold Field Notes" class="logo-img logo-underlined">
+                
+                <div class="logo-subtitle">RESEARCH STATION</div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="observatory.html" class="nav-link">LIVE OBSERVATORY</a>
+                <a href="reports.html" class="nav-link">FIELD REPORTS</a>
+                <a href="residency.html" class="nav-link">RESIDENCY</a>
+                <a href="gear.html" class="nav-link">FIELD GEAR</a>
+                <a href="about.html" class="nav-link active">ABOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="about-intro">
+                <h1>ABOUT THRESHOLD FIELD NOTES</h1>
+                <p class="about-intro-text">
+                    At the threshold between known and unknown, we maintain watch. 
+                    Documenting what moves through the Maine woods. All of it.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Origin Story -->
+    <section class="section" style="background: var(--color-cream);">
+        <div class="container">
+            <div class="content-section">
+                <h2>THE ORIGIN</h2>
+                <p>
+                    Established in early 2025, the Threshold Field Notes Research Station occupies 1.84 acres 
+                    of monitored woodland in southern Maine. What began as a wildlife observation project has 
+                    evolved into something more comprehensive.
+                </p>
+                <p>
+                    The property chose us as much as we chose it. Southern Maine offers diverse habitat, 
+                    relatively low light pollution, and proximity to several documented "high strangeness" zones. 
+                    The price was very reasonable. Suspiciously so.
+                </p>
+                <p>
+                    Initial camera installations for standard wildlife monitoring yielded expected results: deer, 
+                    foxes, occasional black bears, impressive bird activity. Then the first unexplained event was 
+                    documented at 03:47 EST on March 12, 2025. We've been expanding our monitoring capabilities 
+                    ever since.
+                </p>
+
+                <div class="property-stats">
+                    <div class="stat-box">
+                        <div class="stat-number">1.84</div>
+                        <div class="stat-label">Acres Monitored</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">6+</div>
+                        <div class="stat-label">Active Cameras</div>
+                    </div>
+                    <div class="stat-box highlight">
+                        <div class="stat-number">487</div>
+                        <div class="stat-label">Hours Analyzed</div>
+                    </div>
+                    <div class="stat-box highlight">
+                        <div class="stat-number">23</div>
+                        <div class="stat-label">Unexplained Events</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Property -->
+    <section class="section" style="background: var(--color-parchment);">
+        <div class="container">
+            <div class="content-section">
+                <h2>THE PROPERTY</h2>
+                <p>
+                    The station's 1.84 acres encompass diverse habitat types: mature hardwood forest, wetland edge, 
+                    and maintained meadow. Strategic camera placement provides coverage of key observation zones, 
+                    though certain areas remain... difficult to monitor effectively.
+                </p>
+                <p>
+                    Elevation ranges from 340 to 385 feet, with gentle slopes providing natural observation corridors. 
+                    The western boundary runs along a seasonal drainage that attracts various wildlife. The northern 
+                    edge features dense canopy cover where several unexplained thermal signatures have been detected.
+                </p>
+                <p>
+                    Location coordinates are provided to Research Residency participants and verified observers. 
+                    We maintain this discretion to protect both the property and ongoing investigations from 
+                    unwanted interference.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Philosophy -->
+    <section class="section" style="background: var(--color-cream);">
+        <div class="container">
+            <div class="content-section">
+                <h2>MISSION & PHILOSOPHY</h2>
+                <p>
+                    <strong style="font-size: 1.2rem; color: var(--color-forest-dark);">We document what we observe. All of it.</strong>
+                </p>
+                <p>
+                    Our monitoring network operates 24/7/365, capturing wildlife behavior, atmospheric phenomena, 
+                    and incidents that fall outside standard classification. Data is logged, timestamped, and archived. 
+                    We don't explain what we can't verify. We just keep watching.
+                </p>
+                <p>
+                    We maintain scientific protocols while remaining open to observations that don't fit existing 
+                    frameworks. Every incident is documented with the same rigor, whether it's a common deer crossing 
+                    or something we can't identify.
+                </p>
+
+                <div class="philosophy-quote">
+                    <p>"The cameras don't lie. But sometimes we wish they did."</p>
+                </div>
+
+                <p>
+                    This approach has yielded a comprehensive dataset of both explained and unexplained phenomena. 
+                    Standard wildlife activity accounts for approximately 94% of documented events. The remaining 6% 
+                    represents incidents that defy conventional explanation despite thorough investigation.
+                </p>
+                <p>
+                    We're not here to convince anyone of anything. We're here to maintain accurate records of what 
+                    moves through these woods, visible and otherwise.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Infrastructure -->
+    <section class="section" style="background: var(--color-parchment);">
+        <div class="container">
+            <div class="content-section">
+                <h2>INFRASTRUCTURE & CAPABILITY</h2>
+                
+                <div class="infrastructure-grid">
+                    <div class="infrastructure-item">
+                        <h3 class="infrastructure-title">Camera Network</h3>
+                        <p class="infrastructure-desc">
+                            6+ active stations with night vision, thermal imaging, and high-resolution capture. 
+                            Synchronized timestamps for cross-reference verification.
+                        </p>
+                    </div>
+
+                    <div class="infrastructure-item">
+                        <h3 class="infrastructure-title">Sky Observatory</h3>
+                        <p class="infrastructure-desc">
+                            All-sky atmospheric monitoring system. Tracks meteor activity, unusual light phenomena, 
+                            and weather patterns with automated detection algorithms.
+                        </p>
+                    </div>
+
+                    <div class="infrastructure-item">
+                        <h3 class="infrastructure-title">Bat House Array</h3>
+                        <p class="infrastructure-desc">
+                            Multiple bat houses with thermal and ultrasonic monitoring. Population tracking and 
+                            behavioral analysis of 40-60 individuals.
+                        </p>
+                    </div>
+
+                    <div class="infrastructure-item">
+                        <h3 class="infrastructure-title">Weather Station</h3>
+                        <p class="infrastructure-desc">
+                            Comprehensive meteorological data collection for correlation with observed phenomena. 
+                            Temperature, humidity, barometric pressure, wind.
+                        </p>
+                    </div>
+
+                    <div class="infrastructure-item">
+                        <h3 class="infrastructure-title">Residency Apartment</h3>
+                        <p class="infrastructure-desc">
+                            On-site accommodation for researchers with direct camera feed access and observation deck. 
+                            Supports extended investigation periods.
+                        </p>
+                    </div>
+
+                    <div class="infrastructure-item">
+                        <h3 class="infrastructure-title">Data Archive</h3>
+                        <p class="infrastructure-desc">
+                            Secure storage of all footage, incident reports, and analysis. Expanding capacity 
+                            as investigation database grows.
+                        </p>
+                    </div>
+                </div>
+
+                <p style="margin-top: var(--spacing-lg);">
+                    All camera systems use synchronized timestamps for cross-reference verification. Equipment is 
+                    maintained to commercial surveillance standards, though we experience higher-than-average 
+                    malfunction rates in specific zones. Replacement cameras sometimes exhibit the same anomalies 
+                    as their predecessors.
+                </p>
+                <p style="font-style: italic; color: var(--color-charcoal-light);">
+                    This is normal. Probably.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community -->
+    <section class="section" style="background: var(--color-cream);">
+        <div class="container">
+            <div class="content-section">
+                <h2>COMMUNITY INVOLVEMENT</h2>
+                <p>
+                    Our observer network has expanded beyond the physical property. Remote monitors review feeds, 
+                    submit incident reports, and contribute to ongoing investigations. Some of our most significant 
+                    detections came from community observers during night shifts.
+                </p>
+                <p>
+                    The network operates on trust and shared curiosity. Observers range from professional researchers 
+                    to curious naturalists to individuals with their own unexplained experiences. All observations 
+                    are valued equally and documented with the same protocols.
+                </p>
+                <p>
+                    <strong>Join the network. Watch with us.</strong>
+                </p>
+            </div>
+
+            <div class="team-section">
+                <div class="team-intro">
+                    <h3 style="font-size: 1.5rem; margin-bottom: var(--spacing-sm);">THE TEAM</h3>
+                    <p>
+                        Threshold Field Notes is operated by a small dedicated team, supported by visiting researchers, 
+                        night shift observers, and an online community of dedicated watchers. Previous experience with 
+                        unexplained phenomena is not required but is increasingly common among our long-term observers.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" style="background: var(--color-parchment);">
+        <div class="container">
+            <div class="content-section" style="max-width: none;">
+                <h2 style="text-align: center; margin-bottom: var(--spacing-lg);">FREQUENTLY ASKED QUESTIONS</h2>
+                
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <h3 class="faq-question">Q: Is this real?</h3>
+                        <p class="faq-answer">
+                            The property, cameras, and wildlife are absolutely real. The other stuff... you can watch 
+                            the feeds and decide for yourself. We're documenting what we observe. What you make of 
+                            those observations is up to you.
+                        </p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Q: Can I visit the station?</h3>
+                        <p class="faq-answer">
+                            The Research Residency program offers on-site stays for qualified investigators. Day visits 
+                            are not currently offered to maintain observation protocols and, honestly, property security. 
+                            We've found that serious observation requires extended time commitment.
+                        </p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Q: What have you actually seen?</h3>
+                        <p class="faq-answer">
+                            Deer, foxes, countless birds, impressive bat activity, several owls, one very persistent 
+                            raccoon, atmospheric phenomena, and things we're still trying to identify. Check the Field 
+                            Reports for specifics. We document everything with the same attention to detail.
+                        </p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Q: Why can't I see all camera feeds?</h3>
+                        <p class="faq-answer">
+                            Some feeds are offline for equipment maintenance. Others show angles we're not ready to 
+                            share publicly yet. One camera has been replaced four times and keeps producing the same 
+                            unexplainable footage. We're still deciding what to do about that one.
+                        </p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Q: Can I submit my own sightings?</h3>
+                        <p class="faq-answer">
+                            Yes. Use the timestamp and camera ID from any feed. Community reports have led to several 
+                            investigations and helped establish patterns we wouldn't have noticed otherwise. Every 
+                            observation is valuable.
+                        </p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Q: Are you looking for cryptids?</h3>
+                        <p class="faq-answer">
+                            We're looking for whatever is actually there. If that includes cryptids, we'll document them 
+                            with the same protocols we use for white-tailed deer. So far: inconclusive. But the data 
+                            collection continues.
+                        </p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Q: Why Maine?</h3>
+                        <p class="faq-answer">
+                            The property offered diverse habitat, relatively low light pollution, and proximity to 
+                            several "high strangeness" zones documented by previous researchers. Also, the price was 
+                            very reasonable. Suspiciously so. We didn't ask too many questions.
+                        </p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3 class="faq-question">Q: How can I support the station?</h3>
+                        <p class="faq-answer">
+                            Purchase field gear from our shop - proceeds directly support operations. Join the observer 
+                            network and contribute observations. Apply for Research Residency if you want hands-on 
+                            investigation time. Spread the word to other curious observers. We're building something 
+                            here. Help us keep watching.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" style="background: var(--color-cream);">
+        <div class="container">
+            <div class="content-section" style="max-width: none;">
+                <h2 style="text-align: center; margin-bottom: var(--spacing-lg);">GET IN TOUCH</h2>
+                
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">📧</div>
+                        <h3>General Inquiries</h3>
+                        <p>Questions about the station, observation protocols, or general information.</p>
+                        <a href="mailto:info@thresholdfieldnotes.com" class="contact-link">
+                            info@thresholdfieldnotes.com
+                        </a>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">🏠</div>
+                        <h3>Residency Applications</h3>
+                        <p>Submit applications or questions about the Researcher-in-Residence program.</p>
+                        <a href="mailto:residency@thresholdfieldnotes.com" class="contact-link">
+                            residency@thresholdfieldnotes.com
+                        </a>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">📹</div>
+                        <h3>Incident Reports</h3>
+                        <p>Submit observations, incident reports, or requests for investigation assistance.</p>
+                        <a href="mailto:reports@thresholdfieldnotes.com" class="contact-link">
+                            reports@thresholdfieldnotes.com
+                        </a>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: var(--spacing-lg); padding: var(--spacing-md); background: white; border-left: 3px solid var(--color-amber-base);">
+                    <p style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--color-charcoal); margin: 0;">
+                        <strong>Response time:</strong> We typically respond to inquiries within 48 hours. 
+                        During periods of high activity or significant incidents, response times may be longer. 
+                        Night shift operations take priority.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="Boxed.png" alt="Threshold Field Notes" class="footer-logo-img">
+                    </div>
+                    <p class="footer-description">
+                        Observing the unexplained in rural Maine since 2025.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Navigate</h4>
+                    <ul class="footer-links">
+                        <li><a href="observatory.html">Live Observatory</a></li>
+                        <li><a href="reports.html">Field Reports</a></li>
+                        <li><a href="residency.html">Research Residency</a></li>
+                        <li><a href="gear.html">Field Gear</a></li>
+                        <li><a href="about.html">About Station</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Observer Updates</h4>
+                    <p class="footer-text">
+                        Receive notifications of significant events and incident reports.
+                    </p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="your@email.com" class="newsletter-input">
+                        <button type="submit" class="newsletter-btn">SUBSCRIBE</button>
+                    </form>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Station Info</h4>
+                    <div class="footer-info">
+                        <p>1.84 acres monitored</p>
+                        <p>Southern Maine</p>
+                        <p>24/7 observation active</p>
+                        <p class="coordinates">43°XX'XX"N 70°XX'XX"W</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 Threshold Field Notes Research Station. All observations documented.</p>
+                <p class="disclaimer">
+                    The property, cameras, and wildlife are real. Everything else... you decide.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

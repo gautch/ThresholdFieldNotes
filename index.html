@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIELDNOTES Research Station - Southern Maine Wildlife & Atmospheric Observatory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Crimson+Pro:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Topographical Background -->
+    <div class="topo-background"></div>
+    
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-top">
+            <div class="status-bar">
+                <span class="status-item">
+                    <span class="status-dot active"></span>
+                    SYS OPERATIONAL
+                </span>
+                <span class="status-item">
+                    <span class="status-dot"></span>
+                    6 FEEDS ACTIVE
+                </span>
+                <span class="status-item timestamp" id="current-time">
+                    2026.02.14 / 14:23:17 EST
+                </span>
+            </div>
+        </div>
+        
+        <div class="header-main container">
+            <div class="site-logo">
+                <!-- Option 1: Underlined version (primary) -->
+                <img src="Boxed.png" alt="Threshold Field Notes" class="logo-img logo-underlined">
+                
+                <div class="logo-subtitle">RESEARCH STATION</div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link active">HOME</a>
+                <a href="observatory.html" class="nav-link">LIVE OBSERVATORY</a>
+                <a href="reports.html" class="nav-link">FIELD REPORTS</a>
+                <a href="residency.html" class="nav-link">RESIDENCY</a>
+                <a href="gear.html" class="nav-link">FIELD GEAR</a>
+                <a href="about.html" class="nav-link">ABOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-line">OBSERVING THE</span>
+                    <span class="title-line highlight">UNEXPLAINED</span>
+                    <span class="title-line">IN RURAL MAINE</span>
+                </h1>
+                
+                <div class="hero-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">ESTABLISHED</div>
+                        <div class="meta-value">2025</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">COVERAGE</div>
+                        <div class="meta-value">1.84 ACRES</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">STATUS</div>
+                        <div class="meta-value">24/7 MONITORING</div>
+                    </div>
+                </div>
+
+                <p class="hero-description">
+                    A remote field research station monitoring wildlife, atmospheric phenomena, 
+                    and incidents that fall outside standard classification. Real-time camera 
+                    feeds, documented observations, and ongoing investigations into what moves 
+                    through the Maine woods after dark.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="observatory.html" class="btn btn-primary">
+                        <span>VIEW LIVE FEEDS</span>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </a>
+                    <a href="reports.html" class="btn btn-secondary">LATEST INCIDENTS</a>
+                </div>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number counter" data-target="487">487</div>
+                    <div class="stat-label">Hours of Footage Analyzed</div>
+                </div>
+                <div class="stat-card highlight">
+                    <div class="stat-number counter" data-target="23">23</div>
+                    <div class="stat-label">Unexplained Events Documented</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number counter" data-target="6">6</div>
+                    <div class="stat-label">Active Camera Stations</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We're Watching Section -->
+    <section class="section watching-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">CURRENT OBSERVATION NETWORK</h2>
+                <p class="section-subtitle">Real-time monitoring across six active stations</p>
+            </div>
+
+            <div class="camera-grid">
+                <!-- Camera Feed 1 -->
+                <div class="camera-card">
+                    <div class="camera-preview">
+                        <div class="camera-overlay">
+                            <div class="overlay-header">
+                                <span class="camera-id">WOODLAND-01</span>
+                                <span class="camera-status active">● LIVE</span>
+                            </div>
+                            <div class="overlay-footer">
+                                <span class="timestamp">2026.02.14 / 14:23:17 EST</span>
+                            </div>
+                        </div>
+                        <div class="preview-placeholder">
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-name">Ground Level East</h3>
+                        <p class="camera-description">Primary wildlife monitoring. Motion-activated capture with night vision.</p>
+                        <div class="camera-stats">
+                            <span class="stat">12 events today</span>
+                            <span class="stat">Last: Deer @ 13:47</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera Feed 2 -->
+                <div class="camera-card">
+                    <div class="camera-preview">
+                        <div class="camera-overlay">
+                            <div class="overlay-header">
+                                <span class="camera-id">SKY-OBS</span>
+                                <span class="camera-status active">● LIVE</span>
+                            </div>
+                            <div class="overlay-footer">
+                                <span class="timestamp">2026.02.14 / 14:23:17 EST</span>
+                            </div>
+                        </div>
+                        <div class="preview-placeholder sky">
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-name">All-Sky Observatory</h3>
+                        <p class="camera-description">Atmospheric phenomena detection. Meteor tracking and anomaly logging.</p>
+                        <div class="camera-stats">
+                            <span class="stat anomaly">7 unexplained lights this month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera Feed 3 -->
+                <div class="camera-card">
+                    <div class="camera-preview">
+                        <div class="camera-overlay">
+                            <div class="overlay-header">
+                                <span class="camera-id">BAT-HOUSE-A</span>
+                                <span class="camera-status active">● LIVE</span>
+                            </div>
+                            <div class="overlay-footer">
+                                <span class="timestamp">2026.02.14 / 14:23:17 EST</span>
+                            </div>
+                        </div>
+                        <div class="preview-placeholder thermal">
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-name">Bat Colony Alpha</h3>
+                        <p class="camera-description">Thermal imaging with ultrasonic audio capture. Population: 40-60 individuals.</p>
+                        <div class="camera-stats">
+                            <span class="stat">Activity: Moderate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera Feed 4 -->
+                <div class="camera-card">
+                    <div class="camera-preview">
+                        <div class="camera-overlay">
+                            <div class="overlay-header">
+                                <span class="camera-id">CANOPY-02</span>
+                                <span class="camera-status active">● LIVE</span>
+                            </div>
+                            <div class="overlay-footer">
+                                <span class="timestamp">2026.02.14 / 14:23:17 EST</span>
+                            </div>
+                        </div>
+                        <div class="preview-placeholder canopy">
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-name">Elevated North</h3>
+                        <p class="camera-description">Bird activity and tree line observation. Weather monitoring.</p>
+                        <div class="camera-stats">
+                            <span class="stat">3 events today</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera Feed 5 -->
+                <div class="camera-card">
+                    <div class="camera-preview">
+                        <div class="camera-overlay">
+                            <div class="overlay-header">
+                                <span class="camera-id">PERIMETER-W</span>
+                                <span class="camera-status active">● LIVE</span>
+                            </div>
+                            <div class="overlay-footer">
+                                <span class="timestamp">2026.02.14 / 14:23:17 EST</span>
+                            </div>
+                        </div>
+                        <div class="preview-placeholder perimeter">
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-name">Western Boundary</h3>
+                        <p class="camera-description">Large animal detection. Motion logging active.</p>
+                        <div class="camera-stats">
+                            <span class="stat anomaly">Last event: 02/13 03:47 EST</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera Feed 6 - Offline -->
+                <div class="camera-card offline">
+                    <div class="camera-preview">
+                        <div class="camera-overlay">
+                            <div class="overlay-header">
+                                <span class="camera-id">STATION-X</span>
+                                <span class="camera-status offline">● OFFLINE</span>
+                            </div>
+                            <div class="overlay-footer">
+                                <span class="timestamp">EQUIPMENT MAINTENANCE</span>
+                            </div>
+                        </div>
+                        <div class="preview-placeholder offline-state">
+                            <div class="offline-message">SIGNAL LOST</div>
+                        </div>
+                    </div>
+                    <div class="camera-info">
+                        <h3 class="camera-name">Station X</h3>
+                        <p class="camera-description">Status: Equipment Maintenance. Persistent recording anomalies.</p>
+                        <div class="camera-stats">
+                            <span class="stat">Last operational: 01/28/26</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-cta">
+                <a href="observatory.html" class="btn btn-primary">VIEW ALL FEEDS</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Field Activity -->
+    <section class="section reports-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">RECENT FIELD ACTIVITY</h2>
+                <p class="section-subtitle">Latest observations and incident reports</p>
+            </div>
+
+            <div class="reports-grid">
+                <article class="report-card">
+                    <div class="report-header">
+                        <div class="report-meta">
+                            <span class="report-date">2026.02.12</span>
+                            <span class="report-time">23:47 EST</span>
+                            <span class="report-location">PERIMETER-W</span>
+                        </div>
+                        <span class="report-tag incident">INCIDENT</span>
+                    </div>
+                    <h3 class="report-title">Unexplained Bipedal Movement Detected</h3>
+                    <p class="report-excerpt">
+                        Motion detection triggered at 23:47 EST. Enhanced footage analysis shows 
+                        movement pattern inconsistent with known wildlife. Estimated height: 6-7 feet. 
+                        Gait: bipedal. Investigation ongoing.
+                    </p>
+                    <a href="reports.html" class="report-link">
+                        Read full report →
+                    </a>
+                </article>
+
+                <article class="report-card">
+                    <div class="report-header">
+                        <div class="report-meta">
+                            <span class="report-date">2026.02.10</span>
+                            <span class="report-time">03:17 EST</span>
+                            <span class="report-location">CANOPY-02</span>
+                        </div>
+                        <span class="report-tag equipment">EQUIPMENT</span>
+                    </div>
+                    <h3 class="report-title">Recording Interruption Analysis</h3>
+                    <p class="report-excerpt">
+                        Two-minute recording gap with no power loss, storage issues, or network disruption. 
+                        Camera simply stopped, then resumed. Seventh occurrence this month. Pattern emerging.
+                    </p>
+                    <a href="reports.html" class="report-link">
+                        Read full report →
+                    </a>
+                </article>
+
+                <article class="report-card">
+                    <div class="report-header">
+                        <div class="report-meta">
+                            <span class="report-date">2026.02.08</span>
+                            <span class="report-time">19:34 EST</span>
+                            <span class="report-location">WOODLAND-01</span>
+                        </div>
+                        <span class="report-tag wildlife">WILDLIFE</span>
+                    </div>
+                    <h3 class="report-title">Deer Behavioral Pattern Noted</h3>
+                    <p class="report-excerpt">
+                        White-tailed deer paused at Zone 2 marker for four minutes, facing south. 
+                        Third occurrence this week at identical location. Standard behavior otherwise.
+                    </p>
+                    <a href="reports.html" class="report-link">
+                        Read full report →
+                    </a>
+                </article>
+            </div>
+
+            <div class="section-cta">
+                <a href="reports.html" class="btn btn-secondary">VIEW ALL REPORTS</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Focus Section -->
+    <section class="section focus-section">
+        <div class="container-narrow">
+            <div class="focus-content">
+                <h2 class="section-title">CURRENT RESEARCH FOCUS</h2>
+                
+                <div class="focus-grid">
+                    <div class="focus-item">
+                        <div class="focus-icon">→</div>
+                        <div class="focus-text">Nocturnal mammal migration patterns</div>
+                    </div>
+                    <div class="focus-item">
+                        <div class="focus-icon">→</div>
+                        <div class="focus-text">Atmospheric anomaly documentation</div>
+                    </div>
+                    <div class="focus-item">
+                        <div class="focus-icon">→</div>
+                        <div class="focus-text">Bat colony behavioral analysis</div>
+                    </div>
+                    <div class="focus-item highlight">
+                        <div class="focus-icon">→</div>
+                        <div class="focus-text">[ONGOING - Data Collection Phase]</div>
+                    </div>
+                </div>
+
+                <div class="focus-quote">
+                    <p>"We document what we observe. All of it."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-grid">
+                <div class="cta-card">
+                    <h3 class="cta-title">Join the Observer Network</h3>
+                    <p class="cta-description">
+                        Remote monitors review feeds, submit incident reports, and contribute to 
+                        ongoing investigations. Some of our most significant detections came from 
+                        community observers.
+                    </p>
+                    <a href="observatory.html" class="btn btn-primary">START WATCHING</a>
+                </div>
+
+                <div class="cta-card">
+                    <h3 class="cta-title">Research Residency</h3>
+                    <p class="cta-description">
+                        On-site accommodation for qualified observers conducting independent field 
+                        studies. 24/7 access to monitoring equipment and observation points.
+                    </p>
+                    <a href="residency.html" class="btn btn-secondary">APPLY NOW</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="Boxed.png" alt="Threshold Field Notes" class="footer-logo-img">
+                    </div>
+                    <p class="footer-description">
+                        Observing the unexplained in rural Maine since 2025.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Navigate</h4>
+                    <ul class="footer-links">
+                        <li><a href="observatory.html">Live Observatory</a></li>
+                        <li><a href="reports.html">Field Reports</a></li>
+                        <li><a href="residency.html">Research Residency</a></li>
+                        <li><a href="gear.html">Field Gear</a></li>
+                        <li><a href="about.html">About Station</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Observer Updates</h4>
+                    <p class="footer-text">
+                        Receive notifications of significant events and incident reports.
+                    </p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="your@email.com" class="newsletter-input">
+                        <button type="submit" class="newsletter-btn">SUBSCRIBE</button>
+                    </form>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Station Info</h4>
+                    <div class="footer-info">
+                        <p>1.84 acres monitored</p>
+                        <p>Southern Maine</p>
+                        <p>24/7 observation active</p>
+                        <p class="coordinates">43°XX'XX"N 70°XX'XX"W</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 Fieldnotes Research Station. All observations documented.</p>
+                <p class="disclaimer">
+                    The property, cameras, and wildlife are real. Everything else... you decide.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

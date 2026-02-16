@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Gear - Threshold Field Notes Research Station</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Crimson+Pro:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for gear shop page */
+        .shop-header {
+            background: var(--color-forest-dark);
+            color: var(--color-cream);
+            padding: var(--spacing-lg) 0;
+            border-bottom: 2px solid var(--color-amber-base);
+        }
+
+        .shop-intro {
+            max-width: 700px;
+            margin: 0 auto var(--spacing-md);
+            text-align: center;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: rgba(245, 241, 232, 0.9);
+        }
+
+        .category-nav {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: var(--spacing-md);
+        }
+
+        .category-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--color-cream);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--color-amber-base);
+            color: var(--color-charcoal);
+            border-color: var(--color-amber-base);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .product-card {
+            background: white;
+            border: 2px solid var(--color-parchment);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            border-color: var(--color-amber-base);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+
+        .product-image {
+            aspect-ratio: 1;
+            background: var(--color-cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid var(--color-parchment);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-forest-mid);
+            text-align: center;
+            padding: var(--spacing-md);
+            background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-parchment) 100%);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+            padding: 0.25rem 0.75rem;
+            background: var(--color-amber-base);
+            color: var(--color-charcoal);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .product-badge.limited {
+            background: var(--color-alert);
+            color: white;
+        }
+
+        .product-info {
+            padding: var(--spacing-md);
+        }
+
+        .product-category {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--color-forest-mid);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            color: var(--color-forest-dark);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--color-charcoal-light);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .product-note {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--color-amber-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--spacing-sm);
+            border-top: 1px solid var(--color-parchment);
+        }
+
+        .product-price {
+            font-family: var(--font-mono);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--color-amber-dark);
+        }
+
+        .add-to-cart {
+            padding: 0.5rem 1rem;
+            background: var(--color-forest-dark);
+            color: var(--color-cream);
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: var(--color-amber-base);
+            color: var(--color-charcoal);
+        }
+
+        .featured-section {
+            background: var(--color-forest-dark);
+            color: var(--color-cream);
+            padding: var(--spacing-lg) 0;
+            margin: var(--spacing-xl) 0;
+        }
+
+        .featured-product {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .featured-image {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            border: 2px solid var(--color-amber-base);
+        }
+
+        .featured-content h3 {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-amber-base);
+        }
+
+        .featured-content p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .featured-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .featured-list li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-amber-base);
+        }
+
+        @media (max-width: 768px) {
+            .featured-product {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topo-background"></div>
+    
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-top">
+            <div class="status-bar">
+                <span class="status-item">
+                    <span class="status-dot active"></span>
+                    SYS OPERATIONAL
+                </span>
+                <span class="status-item">
+                    <span class="status-dot"></span>
+                    6 FEEDS ACTIVE
+                </span>
+                <span class="status-item timestamp" id="current-time">
+                    2026.02.14 / 14:23:17 EST
+                </span>
+            </div>
+        </div>
+        
+        <div class="header-main container">
+            <div class="site-logo">
+                <!-- Option 1: Underlined version (primary) -->
+                <img src="Boxed.png" alt="Threshold Field Notes" class="logo-img logo-underlined">
+                
+                <div class="logo-subtitle">RESEARCH STATION</div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="observatory.html" class="nav-link">LIVE OBSERVATORY</a>
+                <a href="reports.html" class="nav-link">FIELD REPORTS</a>
+                <a href="residency.html" class="nav-link">RESIDENCY</a>
+                <a href="gear.html" class="nav-link active">FIELD GEAR</a>
+                <a href="about.html" class="nav-link">ABOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="shop-header">
+        <div class="container">
+            <h1 class="section-title" style="text-align: center;">FIELD GEAR & OBSERVATION SUPPLIES</h1>
+            <p class="section-subtitle" style="text-align: center; margin-bottom: var(--spacing-md);">
+                Official Threshold Field Notes Research Station Equipment
+            </p>
+            
+            <p class="shop-intro">
+                Professional-grade observation tools and station merchandise. All proceeds support ongoing 
+                monitoring operations and equipment maintenance. Every item is field-tested and station-approved.
+            </p>
+
+            <div class="category-nav">
+                <button class="category-btn active">All Gear</button>
+                <button class="category-btn">Observation Tools</button>
+                <button class="category-btn">Apparel</button>
+                <button class="category-btn">Documentation</button>
+                <button class="category-btn">Reference Materials</button>
+                <button class="category-btn">Limited Editions</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Product -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="featured-product">
+                <div class="featured-image">
+                    OFFICIAL OBSERVER<br>CREDENTIALS KIT<br>[PRODUCT IMAGE]
+                </div>
+                <div class="featured-content">
+                    <h3>OBSERVER CREDENTIALS KIT</h3>
+                    <p>
+                        Complete identification package for official station observers. Your gateway to the 
+                        observer network and incident report filing privileges.
+                    </p>
+                    <ul class="featured-list">
+                        <li>Laminated ID badge with station logo</li>
+                        <li>Unique observer identification number</li>
+                        <li>Official incident report templates</li>
+                        <li>Equipment checkout authorization card</li>
+                        <li>Access to observer-only documentation</li>
+                        <li>Weatherproof credential holder</li>
+                    </ul>
+                    <div style="display: flex; gap: var(--spacing-md); align-items: center;">
+                        <span style="font-family: var(--font-mono); font-size: 2rem; color: var(--color-amber-base);">
+                            $45.00
+                        </span>
+                        <button class="btn btn-primary">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">OBSERVATION TOOLS</h2>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            WEATHERPROOF<br>FIELD NOTEBOOK<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Documentation</div>
+                        <h3 class="product-name">Weatherproof Field Notebook</h3>
+                        <p class="product-description">
+                            5x7" notebook with 120 pages of grid paper and 12 pre-printed incident report 
+                            templates. Durable cover rated for field conditions.
+                        </p>
+                        <p class="product-note">
+                            Note: Several observers report unusual margin notes appearing in used notebooks. 
+                            We cannot verify these claims.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$18.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-badge">BESTSELLER</div>
+                        <div class="product-image-placeholder">
+                            ANOMALY<br>DOCUMENTATION KIT<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Tools</div>
+                        <h3 class="product-name">Anomaly Documentation Kit</h3>
+                        <p class="product-description">
+                            Professional incident documentation tools: special markers, measurement tools, 
+                            timestamp tags, evidence collection bags, and quick-reference cards.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$35.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            DATA LOG BOOK<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Documentation</div>
+                        <h3 class="product-name">Manual Observation Data Log</h3>
+                        <p class="product-description">
+                            Structured log book for camera observation sessions. Pre-formatted pages with 
+                            timestamp grids, weather tracking, and event classification fields.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$22.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Apparel Section -->
+    <section class="section" style="background: var(--color-parchment);">
+        <div class="container">
+            <h2 class="section-title">STATION APPAREL</h2>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-badge">NEW</div>
+                        <div class="product-image-placeholder">
+                            NIGHT SHIFT<br>OBSERVER HOODIE<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Apparel</div>
+                        <h3 class="product-name">Night Shift Observer Hoodie</h3>
+                        <p class="product-description">
+                            Heavy-weight pullover hoodie in forest green. Features station logo, coordinates 
+                            on sleeve, and "NIGHT SHIFT OBSERVER" designation on back.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$58.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            FIELD OPERATIONS<br>CAP<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Apparel</div>
+                        <h3 class="product-name">Field Operations Cap</h3>
+                        <p class="product-description">
+                            Structured cap with embroidered station logo and "EST. 2026" designation. 
+                            Weatherproof materials, adjustable fit.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$28.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            OBSERVER PATCH SET<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Apparel</div>
+                        <h3 class="product-name">Official Observer Patch Set</h3>
+                        <p class="product-description">
+                            Set of three embroidered patches: Main station logo, "Night Shift Observer," 
+                            and "Incident Response Team." Iron-on backing.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$24.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            THERMAL FIELD SOCKS<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Apparel</div>
+                        <h3 class="product-name">Thermal Observation Socks</h3>
+                        <p class="product-description">
+                            Merino wool blend thermal socks. Because watching camera feeds in Maine winters 
+                            requires proper gear. Available in forest green or charcoal.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$16.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reference Materials -->
+    <section class="section" style="background: var(--color-cream);">
+        <div class="container">
+            <h2 class="section-title">REFERENCE MATERIALS</h2>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            MAINE CRYPTID<br>FIELD GUIDE<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Reference</div>
+                        <h3 class="product-name">Maine Cryptid Field Guide</h3>
+                        <p class="product-description">
+                            Illustrated guide to reported cryptids in New England. Historical sightings, 
+                            behavioral patterns, and identification tips. Informational purposes only.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$32.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            SKY PHENOMENON<br>SPOTTER'S GUIDE<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Reference</div>
+                        <h3 class="product-name">Sky Phenomenon Spotter's Guide</h3>
+                        <p class="product-description">
+                            Comprehensive reference for atmospheric phenomena, both explained and unexplained. 
+                            Includes identification charts and documentation protocols.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$28.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-badge limited">LIMITED</div>
+                        <div class="product-image-placeholder">
+                            KNOWN UNKNOWNS<br>COMPENDIUM<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Reference</div>
+                        <h3 class="product-name">Known Unknowns: A Threshold Compendium</h3>
+                        <p class="product-description">
+                            Limited edition collection of station incident reports, observer testimonies, 
+                            and unexplained phenomena from 2025-2026. Only 250 copies printed.
+                        </p>
+                        <p class="product-note">
+                            Includes exclusive access to redacted sections via online supplement.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$65.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            SEASONAL<br>OBSERVATION<br>CALENDAR<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Reference</div>
+                        <h3 class="product-name">2026 Seasonal Observation Calendar</h3>
+                        <p class="product-description">
+                            Wall calendar featuring optimal observation times, documented phenomena patterns, 
+                            and moon phase tracking. Includes monthly field notes section.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$24.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Camp & Comfort -->
+    <section class="section" style="background: var(--color-parchment);">
+        <div class="container">
+            <h2 class="section-title">CAMP & COMFORT</h2>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            ENAMEL CAMP MUG<br>TOPO DESIGN<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Camp Gear</div>
+                        <h3 class="product-name">Topographical Map Enamel Mug</h3>
+                        <p class="product-description">
+                            12oz enamel camp mug featuring topographical map print of the station property. 
+                            Durable enamel coating, stainless steel rim.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$22.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            INCIDENT RESPONSE<br>THERMOS<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Camp Gear</div>
+                        <h3 class="product-name">"Incident Response Team" Thermos</h3>
+                        <p class="product-description">
+                            32oz stainless steel vacuum thermos. Keeps coffee hot during long observation 
+                            shifts. Laser-engraved station logo and coordinates.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$38.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            EMERGENCY<br>OBSERVATION BLANKET<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Camp Gear</div>
+                        <h3 class="product-name">Emergency Observation Blanket</h3>
+                        <p class="product-description">
+                            Compact thermal blanket for extended outdoor observation sessions. Reflective 
+                            material, weatherproof storage pouch. Station logo embroidered.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$26.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-image-placeholder">
+                            STICKER PACK<br>STATION COLLECTION<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Accessories</div>
+                        <h3 class="product-name">Station Sticker Collection</h3>
+                        <p class="product-description">
+                            Set of 8 weatherproof vinyl stickers: station logos, camera IDs, cryptid silhouettes, 
+                            and "I Survived Night Shift" designation.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$12.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Limited Editions -->
+    <section class="section" style="background: var(--color-cream);">
+        <div class="container">
+            <h2 class="section-title">LIMITED EDITIONS</h2>
+            <p style="text-align: center; margin-bottom: var(--spacing-lg); color: var(--color-charcoal-light);">
+                Special releases commemorating documented incidents and seasonal phenomena
+            </p>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-badge limited">LIMITED</div>
+                        <div class="product-image-placeholder">
+                            JANUARY LIGHTS<br>COMMEMORATIVE<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Limited Edition</div>
+                        <h3 class="product-name">"The January Lights" Commemorative Print</h3>
+                        <p class="product-description">
+                            16x20" enhanced image from SKY-OBS camera during Event LS-026. Numbered edition 
+                            of 100. Includes incident report documentation.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$75.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-badge limited">LIMITED</div>
+                        <div class="product-image-placeholder">
+                            FALL CRYPTID SEASON<br>OBSERVER KIT<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Limited Edition</div>
+                        <h3 class="product-name">Fall Cryptid Season Observer Kit</h3>
+                        <p class="product-description">
+                            Special edition kit for peak activity season: field notebook, thermal socks, 
+                            cryptid guide, observation log, and limited edition patch. Only 50 kits available.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$120.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="product-badge limited">LIMITED</div>
+                        <div class="product-image-placeholder">
+                            DECOMMISSIONED<br>CAMERA UNIT<br>[PRODUCT IMAGE]
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Limited Edition</div>
+                        <h3 class="product-name">Decommissioned STATION-X Camera</h3>
+                        <p class="product-description">
+                            Actual camera unit from STATION-X before persistent anomalies forced replacement. 
+                            Includes documentation of recorded incidents. Certificate of authenticity.
+                        </p>
+                        <p class="product-note">
+                            Note: Camera is non-functional but contains original SD card with incident footage.
+                        </p>
+                        <div class="product-footer">
+                            <span class="product-price">$250.00</span>
+                            <button class="add-to-cart">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <div class="container-narrow" style="text-align: center;">
+            <h2 style="font-size: 2rem; margin-bottom: var(--spacing-md); color: var(--color-forest-dark);">
+                SUPPORT THE STATION
+            </h2>
+            <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: var(--spacing-md); color: var(--color-charcoal-light);">
+                Every purchase directly supports ongoing monitoring operations, equipment maintenance, and 
+                investigation funding. We document what we observe. You help us keep observing.
+            </p>
+            <div style="display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
+                <a href="#" class="btn btn-primary">VIEW ALL PRODUCTS</a>
+                <a href="about.html" class="btn btn-secondary">ABOUT THE STATION</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="Boxed.png" alt="Threshold Field Notes" class="footer-logo-img">
+                    </div>
+                    <p class="footer-description">
+                        Observing the unexplained in rural Maine since 2025.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Navigate</h4>
+                    <ul class="footer-links">
+                        <li><a href="observatory.html">Live Observatory</a></li>
+                        <li><a href="reports.html">Field Reports</a></li>
+                        <li><a href="residency.html">Research Residency</a></li>
+                        <li><a href="gear.html">Field Gear</a></li>
+                        <li><a href="about.html">About Station</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Observer Updates</h4>
+                    <p class="footer-text">
+                        Receive notifications of significant events and incident reports.
+                    </p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="your@email.com" class="newsletter-input">
+                        <button type="submit" class="newsletter-btn">SUBSCRIBE</button>
+                    </form>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Station Info</h4>
+                    <div class="footer-info">
+                        <p>1.84 acres monitored</p>
+                        <p>Southern Maine</p>
+                        <p>24/7 observation active</p>
+                        <p class="coordinates">43°XX'XX"N 70°XX'XX"W</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 Threshold Field Notes Research Station. All observations documented.</p>
+                <p class="disclaimer">
+                    The property, cameras, and wildlife are real. Everything else... you decide.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
