@@ -128,7 +128,7 @@
         }
 
         .report-body p {
-            margin-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
         }
 
         .report-observation {
@@ -147,10 +147,20 @@
         }
 
         .report-image {
-            aspect-ratio: 16/9;
+            aspect-ratio: 16/11;
             background: var(--color-charcoal);
             position: relative;
             overflow: hidden;
+        }
+
+        .report-image-description {
+                text-align: center;
+                margin-top: var(--spacing-xs);
+                font-family: var(--font-mono);
+                font-size: 0.8rem;
+                color: white;
+                background-color: var(--color-charcoal-light);
+                padding: var(--spacing-xs);
         }
 
         .image-placeholder {
@@ -295,92 +305,98 @@
     <!-- Page Header -->
     <section class="reports-header">
         <div class="container">
-            <h1 class="section-title">FIELD REPORTS</h1>
-            <p class="section-subtitle">Observations, Incidents, and Ongoing Investigations</p>
-            
-            <div class="filter-bar">
-                <button class="filter-tag active">All Reports</button>
-                <button class="filter-tag">Incidents</button>
-                <button class="filter-tag">Wildlife</button>
-                <button class="filter-tag">Equipment</button>
-                <button class="filter-tag">Atmospheric</button>
-                <button class="filter-tag">Unexplained</button>
-            </div>
+            <h1 class="section-title">Recording Interruption Analysis</h1>
+            <p class="section-subtitle">Equipment Malfunctions and Signal Interference Events</p>
         </div>
     </section>
 
     <!-- Featured Report -->
     <section class="section">
         <div class="container">
-            <div class="reports-grid">
-                <article class="report-card">
-                    <div class="report-header">
-                        <div class="report-meta">
-                            <span class="report-date">2026.02.12</span>
-                            <span class="report-time">23:47 EST</span>
-                            <span class="report-location">PERIMETER-W</span>
+            <article class="report-full featured">
+                <div class="report-full-header">
+                                        
+                    <div class="report-conditions">
+                        <div class="condition-item">
+                            <span class="condition-label">Weather</span>
+                            <span class="condition-value">Overcast, 34°F</span>
                         </div>
-                        <span class="report-tag incident">INCIDENT</span>
-                    </div>
-                    <h3 class="report-title">Unexplained Bipedal Movement Detected</h3>
-                    <p class="report-excerpt">
-                        Motion detection triggered at 23:47 EST. Enhanced footage analysis shows 
-                        movement pattern inconsistent with known wildlife. Estimated height: 6-7 feet. 
-                        Gait: bipedal. Investigation ongoing.
-                    </p>
-                    <a href="bipedal-movement-report.html" class="report-link">
-                        Read full report →
-                    </a>
-                </article>
-
-                <article class="report-card">
-                    <div class="report-header">
-                        <div class="report-meta">
-                            <span class="report-date">2026.02.10</span>
-                            <span class="report-time">03:17 EST</span>
-                            <span class="report-location">CANOPY-02</span>
+                        <div class="condition-item">
+                            <span class="condition-label">Moon Phase</span>
+                            <span class="condition-value">New Moon</span>
                         </div>
-                        <span class="report-tag equipment">EQUIPMENT</span>
-                    </div>
-                    <h3 class="report-title">Recording Interruption Analysis</h3>
-                    <p class="report-excerpt">
-                        Two-minute recording gap with no power loss, storage issues, or network disruption. 
-                        Camera simply stopped, then resumed. Seventh occurrence this month. Pattern emerging.
-                    </p>
-                    <a href="recording-interruption-analysis.html" class="report-link">
-                        Read full report →
-                    </a>
-                </article>
-
-                <article class="report-card">
-                    <div class="report-header">
-                        <div class="report-meta">
-                            <span class="report-date">2026.02.08</span>
-                            <span class="report-time">19:34 EST</span>
-                            <span class="report-location">WOODLAND-01</span>
+                        <div class="condition-item">
+                            <span class="condition-label">Visibility</span>
+                            <span class="condition-value">Poor</span>
                         </div>
-                        <span class="report-tag wildlife">WILDLIFE</span>
+                        <div class="condition-item">
+                            <span class="condition-label">Personnel</span>
+                            <span class="condition-value">Automated monitoring</span>
+                        </div>
                     </div>
-                    <h3 class="report-title">Deer Behavioral Pattern Noted</h3>
-                    <p class="report-excerpt">
-                        White-tailed deer paused at Zone 2 marker for four minutes, facing south. 
-                        Third occurrence this week at identical location. Standard behavior otherwise.
-                    </p>
-                    <a href="deer-behavioral-pattern.html" class="report-link">
-                        Read full report →
-                    </a>
-                </article>
-            </div>            
+                </div>
 
-            <!-- Pagination -->
-            <!-- <div class="pagination">
-                <button class="page-number active">1</button>
-                <button class="page-number">2</button>
-                <button class="page-number">3</button>
-                <button class="page-number">4</button>
-                <button class="page-number">→</button>
-            </div> -->
-        </div>
+                <div class="report-full-meta">
+                        <span class="meta-badge">2026.02.08</span>
+                        <span class="meta-badge">02:14:17 EST</span>
+                        <span class="meta-badge location">STATION-ALPHA</span>
+                        <span class="report-tag incident">EQUIPMENT</span>
+                    </div>
+
+                <div class="report-body">
+                    <p>At 02:14:17 EST, automated monitoring systems detected a critical recording interruption across multiple camera feeds. The event affected STATION-ALPHA, STATION-BRAVO, and PERIMETER-N simultaneously, resulting in a total recording gap of 4 minutes and 23 seconds.</p>
+
+                    <p>System diagnostics revealed several unusual characteristics inconsistent with typical equipment failure:</p>
+
+                    <div class="report-observation">
+                        <strong>Primary Observation:</strong> Recording systems experienced synchronized signal degradation across all affected feeds. Power systems remained operational, and network connectivity tests showed no packet loss during the interruption period.
+                    </div>
+
+                    <div class="report-image-grid">
+                        <div class="report-image">
+                            <div class="image-placeholder">SIGNAL DEGRADATION PATTERN - Image Not Available</div>
+                            <div class="report-image-description">
+                                SIGNAL ANALYSIS / 02:14:17 EST - Frequency interference detected across multiple channels
+                            </div>
+                        </div>
+                        <div class="report-image">
+                            <div class="image-placeholder">SYSTEM LOG - Image Not Available</div>
+                            <div class="report-image-description">
+                                EVENT LOG / 02:18:40 EST - Recording systems恢复正常操作
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>Technical investigation produced the following findings:</p>
+
+                    <ul style="list-style: none; padding-left: 1rem;">
+                        <li style="margin-bottom: 0.5rem;">→ No power fluctuations detected during interruption period</li>
+                        <li style="margin-bottom: 0.5rem;">→ Network latency remained within normal parameters</li>
+                        <li style="margin-bottom: 0.5rem;">→ Storage systems showed no write errors or capacity issues</li>
+                        <li style="margin-bottom: 0.5rem;">→ Environmental sensors recorded no anomalous conditions</li>
+                    </ul>
+
+                    <p>Frequency analysis detected unusual electromagnetic interference in the 2.4 GHz and 5.8 GHz bands during the interruption. The interference pattern does not match known consumer electronics or industrial equipment signatures.</p>
+
+                    <div class="report-notes">
+                        <div class="report-notes-title">Technical Analysis:</div>
+                        <ul>
+                            <li>Signal strength dropped by -47 dB across all affected channels simultaneously</li>
+                            <li>Interference pattern suggests directional source rather than atmospheric conditions</li>
+                            <li>Similar events logged on 01/22 and 01/31, both occurring between 02:00-03:00 EST</li>
+                            <li>EM shielding installed on critical recording equipment</li>
+                            <li>Backup recording systems activated for future events</li>
+                            <li>FCC interference report filed as required by regulation</li>
+                        </ul>
+                    </div>
+
+                    <p>This incident has been classified as equipment interference pending further investigation. All affected systems have been restored to full operational status. Enhanced monitoring protocols have been implemented to capture future events.</p>
+
+                    <span class="report-status status-investigating">STATUS: TECHNICAL INVESTIGATION</span>
+                </div>
+            </article>
+
+            
     </section>
 
     <!-- Footer -->

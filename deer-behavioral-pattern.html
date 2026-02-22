@@ -128,7 +128,7 @@
         }
 
         .report-body p {
-            margin-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
         }
 
         .report-observation {
@@ -147,10 +147,20 @@
         }
 
         .report-image {
-            aspect-ratio: 16/9;
+            aspect-ratio: 16/11;
             background: var(--color-charcoal);
             position: relative;
             overflow: hidden;
+        }
+
+        .report-image-description {
+                text-align: center;
+                margin-top: var(--spacing-xs);
+                font-family: var(--font-mono);
+                font-size: 0.8rem;
+                color: white;
+                background-color: var(--color-charcoal-light);
+                padding: var(--spacing-xs);
         }
 
         .image-placeholder {
@@ -295,92 +305,104 @@
     <!-- Page Header -->
     <section class="reports-header">
         <div class="container">
-            <h1 class="section-title">FIELD REPORTS</h1>
-            <p class="section-subtitle">Observations, Incidents, and Ongoing Investigations</p>
-            
-            <div class="filter-bar">
-                <button class="filter-tag active">All Reports</button>
-                <button class="filter-tag">Incidents</button>
-                <button class="filter-tag">Wildlife</button>
-                <button class="filter-tag">Equipment</button>
-                <button class="filter-tag">Atmospheric</button>
-                <button class="filter-tag">Unexplained</button>
-            </div>
+            <h1 class="section-title">Deer Behavioral Pattern Noted</h1>
+            <p class="section-subtitle">Wildlife Behavior Analysis and Anomalous Activities</p>
         </div>
     </section>
 
     <!-- Featured Report -->
     <section class="section">
         <div class="container">
-            <div class="reports-grid">
-                <article class="report-card">
-                    <div class="report-header">
-                        <div class="report-meta">
-                            <span class="report-date">2026.02.12</span>
-                            <span class="report-time">23:47 EST</span>
-                            <span class="report-location">PERIMETER-W</span>
+            <article class="report-full featured">
+                <div class="report-full-header">
+                                        
+                    <div class="report-conditions">
+                        <div class="condition-item">
+                            <span class="condition-label">Weather</span>
+                            <span class="condition-value">Partly Cloudy, 41°F</span>
                         </div>
-                        <span class="report-tag incident">INCIDENT</span>
+                        <div class="condition-item">
+                            <span class="condition-label">Moon Phase</span>
+                            <span class="condition-value">First Quarter</span>
+                        </div>
+                        <div class="condition-item">
+                            <span class="condition-label">Visibility</span>
+                            <span class="condition-value">Good</span>
+                        </div>
+                        <div class="condition-item">
+                            <span class="condition-label">Personnel</span>
+                            <span class="condition-value">Field observer</span>
+                        </div>
                     </div>
-                    <h3 class="report-title">Unexplained Bipedal Movement Detected</h3>
-                    <p class="report-excerpt">
-                        Motion detection triggered at 23:47 EST. Enhanced footage analysis shows 
-                        movement pattern inconsistent with known wildlife. Estimated height: 6-7 feet. 
-                        Gait: bipedal. Investigation ongoing.
-                    </p>
-                    <a href="bipedal-movement-report.html" class="report-link">
-                        Read full report →
-                    </a>
-                </article>
+                </div>
 
-                <article class="report-card">
-                    <div class="report-header">
-                        <div class="report-meta">
-                            <span class="report-date">2026.02.10</span>
-                            <span class="report-time">03:17 EST</span>
-                            <span class="report-location">CANOPY-02</span>
-                        </div>
-                        <span class="report-tag equipment">EQUIPMENT</span>
-                    </div>
-                    <h3 class="report-title">Recording Interruption Analysis</h3>
-                    <p class="report-excerpt">
-                        Two-minute recording gap with no power loss, storage issues, or network disruption. 
-                        Camera simply stopped, then resumed. Seventh occurrence this month. Pattern emerging.
-                    </p>
-                    <a href="recording-interruption-analysis.html" class="report-link">
-                        Read full report →
-                    </a>
-                </article>
-
-                <article class="report-card">
-                    <div class="report-header">
-                        <div class="report-meta">
-                            <span class="report-date">2026.02.08</span>
-                            <span class="report-time">19:34 EST</span>
-                            <span class="report-location">WOODLAND-01</span>
-                        </div>
+                <div class="report-full-meta">
+                        <span class="meta-badge">2026.02.15</span>
+                        <span class="meta-badge">18:32:45 EST</span>
+                        <span class="meta-badge location">MEADOW-EAST</span>
                         <span class="report-tag wildlife">WILDLIFE</span>
                     </div>
-                    <h3 class="report-title">Deer Behavioral Pattern Noted</h3>
-                    <p class="report-excerpt">
-                        White-tailed deer paused at Zone 2 marker for four minutes, facing south. 
-                        Third occurrence this week at identical location. Standard behavior otherwise.
-                    </p>
-                    <a href="deer-behavioral-pattern.html" class="report-link">
-                        Read full report →
-                    </a>
-                </article>
-            </div>            
 
-            <!-- Pagination -->
-            <!-- <div class="pagination">
-                <button class="page-number active">1</button>
-                <button class="page-number">2</button>
-                <button class="page-number">3</button>
-                <button class="page-number">4</button>
-                <button class="page-number">→</button>
-            </div> -->
-        </div>
+                <div class="report-body">
+                    <p>During routine wildlife observation at 18:32:45 EST, field observer documented unusual behavioral patterns in a group of white-tailed deer (Odocoileus virginianus) in the eastern meadow area. The group consisted of 6 adults and 2 fawns exhibiting coordinated movement inconsistent with typical deer behavior.</p>
+
+                    <p>Key observations included synchronized head movements, formation walking, and apparent response to unseen stimuli:</p>
+
+                    <div class="report-observation">
+                        <strong>Primary Observation:</strong> Deer group maintained precise triangular formation for approximately 12 minutes, with individuals maintaining consistent 8-10 foot spacing. All deer simultaneously oriented toward the same direction (northwest) despite no visible threat or attractant.
+                    </div>
+
+                    <div class="report-image-grid">
+                        <div class="report-image">
+                            <div class="image-placeholder">DEER FORMATION - Image Not Available</div>
+                            <div class="report-image-description">
+                                GROUP FORMATION / 18:35:12 EST - Triangular pattern maintained across meadow
+                            </div>
+                        </div>
+                        <div class="report-image">
+                            <div class="image-placeholder">SYNCHRONIZED MOVEMENT - Image Not Available</div>
+                            <div class="report-image-description">
+                                MOVEMENT PATTERN / 18:41:03 EST - Coordinated head orientation analysis
+                            </div>
+                        </div>
+                        <div class="report-image">
+                            <div class="image-placeholder">TERRITORY MAP - Image Not Available</div>
+                            <div class="report-image-description">
+                                MOVEMENT PATH / 18:44:27 EST - GPS tracking of group progression
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>Behavioral analysis revealed several anomalies compared to documented white-tailed deer patterns:</p>
+
+                    <ul style="list-style: none; padding-left: 1rem;">
+                        <li style="margin-bottom: 0.5rem;">→ Formation maintenance exceeds typical herd cohesion distances</li>
+                        <li style="margin-bottom: 0.5rem;">→ No foraging behavior observed during 12-minute period</li>
+                        <li style="margin-bottom: 0.5rem;">→ Absence of typical vigilance behaviors (ear twitching, foot stamping)</li>
+                        <li style="margin-bottom: 0.5rem;">→ Movement direction remained constant despite terrain changes</li>
+                    </ul>
+
+                    <p>Audio monitoring detected no unusual vocalizations or predator calls. Environmental sensors recorded normal atmospheric conditions. The deer group eventually dispersed normally at 18:44:58 EST, resuming typical foraging behavior.</p>
+
+                    <div class="report-notes">
+                        <div class="report-notes-title">Behavioral Analysis Notes:</div>
+                        <ul>
+                            <li>Similar coordinated behavior documented in same area on 01/29 and 02/03</li>
+                            <li>Wildlife behaviorist consulted - patterns not consistent with known predator avoidance</li>
+                            <li>Geomagnetic sensors recorded minor fluctuations during event period</li>
+                            <li>Soil and vegetation samples collected from formation area for analysis</li>
+                            <li>Camera traps increased in eastern meadow region</li>
+                            <li>Comparison with regional wildlife management databases ongoing</li>
+                        </ul>
+                    </div>
+
+                    <p>This behavioral pattern has been classified as anomalous wildlife behavior pending further analysis. Continued monitoring of the deer population in this area has been prioritized. The event may represent previously undocumented social behavior or response to environmental factors not yet identified.</p>
+
+                    <span class="report-status status-investigating">STATUS: BEHAVIORAL STUDY</span>
+                </div>
+            </article>
+
+            
     </section>
 
     <!-- Footer -->
