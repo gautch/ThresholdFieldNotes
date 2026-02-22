@@ -128,7 +128,7 @@
         }
 
         .report-body p {
-            margin-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
         }
 
         .report-observation {
@@ -147,10 +147,20 @@
         }
 
         .report-image {
-            aspect-ratio: 16/9;
+            /* aspect-ratio: 16/9; */
             background: var(--color-charcoal);
             position: relative;
             overflow: hidden;
+        }
+
+        .report-image-description {
+                text-align: center;
+                margin-top: var(--spacing-xs);
+                font-family: var(--font-mono);
+                font-size: 0.8rem;
+                color: white;
+                background-color: var(--color-charcoal-light);
+                padding: var(--spacing-xs);
         }
 
         .image-placeholder {
@@ -343,28 +353,30 @@
                     </div>
 
                 <div class="report-body">
-                    <p>At precisely 23:47:23 EST, PERIMETER-W motion sensors triggered a Level 3 alert indicating significant movement along the western property boundary. Initial review of the footage showed movement consistent with a large terrestrial animal crossing the monitored zone.</p>
+                    <p>At precisely 23:47:23 EST, PERIMETER-W motion sensors triggered a Level 3 alert indicating significant movement along the western property boundary. Initial review of the footage showed movement consistent with a large terrestrial animals crossing the monitored zone.</p>
 
                     <p>Enhanced analysis revealed several anomalies inconsistent with known regional wildlife:</p>
 
                     <div class="report-observation">
-                        <strong>Primary Observation:</strong> Subject moved through frame in approximately 4.2 seconds, covering an estimated 18 feet. Gait analysis indicates bipedal locomotion with stride length of 4.5-5 feet. Height estimate based on reference markers: 6'4" to 7'2".
+                        <strong>Primary Observation:</strong> Subjects moved through frame in approximately 4.2 seconds, covering an estimated 18 feet. Gait analysis indicates bipedal locomotion with stride length of 4.5-5 feet. Height estimate based on reference markers: 6'4" to 7'2".
                     </div>
-
                     <div class="report-image-grid">
                         <div class="report-image">
-                            <div class="image-placeholder">
-                                FRAME 001 / 23:47:23<br>ENHANCED
+                            <img src="images/western-boundry-1771716152818.png" alt="FRAME 001 / 23:47:23 ENHANCED">
+                            <div class="report-image-description">
+                                FRAME 001 / 20:02:23 EST - Initial detection at western boundary - East facing camera
                             </div>
                         </div>
                         <div class="report-image">
-                            <div class="image-placeholder">
-                                FRAME 018 / 23:47:25<br>ENHANCED
+                            <img src="images/western-boundry-1771716250961.png" alt="FRAME 018 / 23:47:25 ENHANCED">
+                            <div class="report-image-description">
+                                FRAME 018 / 20:45:07 EST - Subject in mid-transit - West facing camera
                             </div>
                         </div>
                         <div class="report-image">
-                            <div class="image-placeholder">
-                                FRAME 034 / 23:47:27<br>ENHANCED
+                            <img src="images/western-boundry-1771716297333.png" alt="FRAME 034 / 23:47:27 ENHANCED">
+                            <div class="report-image-description">
+                                FRAME 034 / 23:47:27 EST - Potentially Resident Researcher out on a walk - North facing camera
                             </div>
                         </div>
                     </div>

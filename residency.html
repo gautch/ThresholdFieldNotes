@@ -83,7 +83,7 @@
         .includes-description {
             font-size: 0.9rem;
             line-height: 1.6;
-            color: rgba(245, 241, 232, 0.8);
+            color: rgba(42, 42, 42);
         }
 
         .space-grid {
@@ -204,6 +204,7 @@
         .calendar-day.priority {
             background: rgba(255, 136, 0, 0.1);
             border-color: var(--color-amber-base);
+            cursor: not-allowed;
         }
 
         .calendar-day.reserved {
@@ -368,8 +369,8 @@
                 </p>
 
                 <div class="hero-actions">
-                    <a href="#apply" class="btn btn-primary">APPLY FOR RESIDENCY</a>
-                    <a href="#availability" class="btn btn-secondary">CHECK AVAILABILITY</a>
+                    <a href="#application-status" class="btn btn-primary">APPLY FOR RESIDENCY</a>
+                    <a href="#application-status" class="btn btn-secondary">CHECK AVAILABILITY</a>
                 </div>
             </div>
         </div>
@@ -384,7 +385,7 @@
 
             <div class="includes-grid">
                 <div class="includes-item">
-                    <div class="includes-icon">🏠</div>
+                    <div class="includes-icon"><img src="https://placeholdit.com/244x165/dddddd/999999" alt="Private Studio Apartment" style="width: 100%; height: 100%; object-fit: cover;"></div>
                     <h3 class="includes-title">Private Studio Apartment</h3>
                     <p class="includes-description">
                         Full kitchen, bathroom, workspace, and sleeping area. Modern amenities in a rustic setting.
@@ -392,7 +393,7 @@
                 </div>
 
                 <div class="includes-item">
-                    <div class="includes-icon">📹</div>
+                    <div class="includes-icon"><img src="https://placeholdit.com/244x165/dddddd/999999" alt="24/7 Feed Access" style="width: 100%; height: 100%; object-fit: cover;"></div>
                     <h3 class="includes-title">24/7 Feed Access</h3>
                     <p class="includes-description">
                         Secure portal access to all live camera feeds. Multi-monitor observation desk included.
@@ -400,7 +401,7 @@
                 </div>
 
                 <div class="includes-item">
-                    <div class="includes-icon">🔬</div>
+                    <div class="includes-icon"><img src="https://placeholdit.com/244x165/dddddd/999999" alt="Equipment Privileges" style="width: 100%; height: 100%; object-fit: cover;"></div>
                     <h3 class="includes-title">Equipment Privileges</h3>
                     <p class="includes-description">
                         Checkout access to field equipment including night vision, thermal imaging, and recording devices.
@@ -408,7 +409,7 @@
                 </div>
 
                 <div class="includes-item">
-                    <div class="includes-icon">📊</div>
+                    <div class="includes-icon"><img src="https://placeholdit.com/244x165/dddddd/999999" alt="Data Archive Access" style="width: 100%; height: 100%; object-fit: cover;"></div>
                     <h3 class="includes-title">Data Archive Access</h3>
                     <p class="includes-description">
                         Historical observation data, incident reports, and documented anomalies available for research.
@@ -416,7 +417,7 @@
                 </div>
 
                 <div class="includes-item">
-                    <div class="includes-icon">🌙</div>
+                    <div class="includes-icon"><img src="https://placeholdit.com/244x165/dddddd/999999" alt="Night Shift Priority" style="width: 100%; height: 100%; object-fit: cover;"></div>
                     <h3 class="includes-title">Night Shift Priority</h3>
                     <p class="includes-description">
                         Optional participation in night observation shifts when peak activity occurs.
@@ -424,7 +425,7 @@
                 </div>
 
                 <div class="includes-item">
-                    <div class="includes-icon">📝</div>
+                    <div class="includes-icon"><img src="https://placeholdit.com/244x165/dddddd/999999" alt="Filing Credentials" style="width: 100%; height: 100%; object-fit: cover;"></div>
                     <h3 class="includes-title">Filing Credentials</h3>
                     <p class="includes-description">
                         Official incident report filing privileges. Your observations become part of our research record.
@@ -484,8 +485,19 @@
         </div>
     </section>
 
+    <!-- Application Status Banner -->
+    <section class="section" id="application-status" style="background: var(--color-amber-base); padding: var(--spacing-md) 0;">
+        <div class="container">
+            <div style="text-align: center; color: var(--color-cream);">
+                <h3 style="margin: 0; font-size: 1.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">
+                    Current Not Accepting Residency Applications
+                </h3>
+            </div>
+        </div>
+    </section>
+
     <!-- Availability Calendar -->
-    <section class="section" id="availability">
+    <section class="section">
         <div class="container-narrow">
             <div class="calendar-section">
                 <div class="calendar-header">
@@ -497,7 +509,7 @@
                         </div>
                         <div class="legend-item">
                             <div class="legend-dot priority"></div>
-                            <span>Priority Window</span>
+                            <span>Local Priority</span>
                         </div>
                         <div class="legend-item">
                             <div class="legend-dot reserved"></div>
@@ -521,37 +533,37 @@
                     <div class="calendar-day"></div>
                     <div class="calendar-day"></div>
                     <div class="calendar-day"></div>
-                    <div class="calendar-day available">1</div>
+                    <div class="calendar-day priority">1</div>
                     
-                    <div class="calendar-day available">2</div>
-                    <div class="calendar-day available">3</div>
-                    <div class="calendar-day available">4</div>
+                    <div class="calendar-day priority">2</div>
+                    <div class="calendar-day priority">3</div>
+                    <div class="calendar-day priority">4</div>
                     <div class="calendar-day reserved">5</div>
                     <div class="calendar-day reserved">6</div>
                     <div class="calendar-day reserved">7</div>
                     <div class="calendar-day reserved">8</div>
                     
-                    <div class="calendar-day available">9</div>
-                    <div class="calendar-day available">10</div>
-                    <div class="calendar-day available">11</div>
-                    <div class="calendar-day available">12</div>
+                    <div class="calendar-day priority">9</div>
+                    <div class="calendar-day priority">10</div>
+                    <div class="calendar-day priority">11</div>
+                    <div class="calendar-day priority">12</div>
                     <div class="calendar-day priority">13</div>
                     <div class="calendar-day priority">14</div>
                     <div class="calendar-day priority">15</div>
                     
-                    <div class="calendar-day available">16</div>
-                    <div class="calendar-day available">17</div>
+                    <div class="calendar-day priority">16</div>
+                    <div class="calendar-day priority">17</div>
                     <div class="calendar-day reserved">18</div>
                     <div class="calendar-day reserved">19</div>
                     <div class="calendar-day reserved">20</div>
                     <div class="calendar-day reserved">21</div>
-                    <div class="calendar-day available">22</div>
+                    <div class="calendar-day priority">22</div>
                     
-                    <div class="calendar-day available">23</div>
-                    <div class="calendar-day available">24</div>
-                    <div class="calendar-day available">25</div>
-                    <div class="calendar-day available">26</div>
-                    <div class="calendar-day available">27</div>
+                    <div class="calendar-day priority">23</div>
+                    <div class="calendar-day priority">24</div>
+                    <div class="calendar-day priority">25</div>
+                    <div class="calendar-day priority">26</div>
+                    <div class="calendar-day priority">27</div>
                     <div class="calendar-day priority">28</div>
                     <div class="calendar-day priority">29</div>
                     
@@ -685,7 +697,7 @@
     </section>
 
     <!-- Application Form -->
-    <section class="section" id="apply">
+    <!-- <section class="section" id="apply">
         <div class="container-narrow">
             <div class="application-form">
                 <h2 style="font-size: 2rem; margin-bottom: var(--spacing-sm); color: var(--color-forest-dark);">
@@ -769,6 +781,17 @@
 
                     <button type="submit" class="form-submit">SUBMIT APPLICATION</button>
                 </form>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Application Status Banner -->
+    <section class="section" style="background: var(--color-amber-base); padding: var(--spacing-md) 0;">
+        <div class="container">
+            <div style="text-align: center; color: var(--color-cream);">
+                <h3 style="margin: 0; font-size: 1.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">
+                    Current Not Accepting Residency Applications
+                </h3>
             </div>
         </div>
     </section>
